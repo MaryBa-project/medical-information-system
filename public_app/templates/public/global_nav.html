@@ -1,0 +1,41 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- Лівий блок з логотипом та текстом "Medical Center" -->
+    <a class="navbar-brand" href="{% url "public:index" %}">
+      <img src="{% static 'public/img/logo.png' %}" width="35" height="40" class="d-inline-block align-center" alt="Medical Logo" />
+      <span class="font-weight-bold">Medical Center</span>
+    </a>
+
+    <!-- Кнопка "тоглера" для згортання/розгортання меню -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span></button>
+
+    <!-- Правий блок з елементами навігації -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Адмін панель</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "public:index" %}">Головна сторінка</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "public:contacts" %}">Контакти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Авторизація</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-circle"></i></a>
+          <div class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Особистий кабінет</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Вийти</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

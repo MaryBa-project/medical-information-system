@@ -1,0 +1,98 @@
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* Кнопки загальні */
+.custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #007bff;/* Колір фону */
+  color: #fff;/* Колір тексту */
+  text-decoration: none;/* Видалити підкреслення ссилки */
+  border-radius: 5px;/* Закругленість кутів */
+  border-style: none;
+}
+
+.custom-button:active {
+  background-color: #0056b3;  /* Колір фону після натискання */
+}
+
+
+
+/* Меню */
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+  padding: 10px;
+  top: 0;
+  position: sticky;
+  width: 100%;
+  z-index: 1000;
+}
+
+.font-weight-bold {
+  font-family: cursive;
+  font-weight: 600;
+}
+
+.navbar-nav {
+  flex-wrap: nowrap;
+}
+
+.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+
+
+/* Текст */
+.slider_text h3 span {
+  font-family: cursive;
+  font-size: 60px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .slider_text h3 {
+    font-size: 33px;
+    letter-spacing: 3px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .slider_text h3 {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .slider_text h3 {
+    font-size: 35px;
+    letter-spacing: 3px;
+  }
+}
+
+.slider_text p {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000A6;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .slider_text p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .slider_text p {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,89 @@
+{% extends 'public/base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'public/css/for_index.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <!-- Банер -->
+  <div class="single_slider d-flex align-items-center bg_1">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="slider_text">
+            <h3><span class="font-weight-bold">Ласкаво просимо!</span></h3>
+            <p>
+              Звертайтесь до нас з будь-якими медичними питаннями та проблемами!<br />
+              Ми завжди тут, щоб допомогти вам повернутися до здорового життя.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Квадратики -->
+
+  <div class="nav_box">
+    <div class="container">
+      <div class="box text-center">
+        <h3>Авторизація</h3>
+        <p>
+          Ми дбаємо про безпеку ваших даних!<br />
+          Для роботи безпосередньо з внутрішньою системою медичного закладу необхідно авторизуватись.
+        </p>
+        <a href="#" class="custom-button-white">Авторизуватись</a>
+      </div>
+      <div class="box text-center">
+        <h3>Зв'язок</h3>
+        <p>Наш заклад надає зворотній зв'язок через найпопулярніші меседжери.</p>
+        <a href="{% url "public:contacts" %}" class="custom-button-white">Контакти</a>
+      </div>
+      <div class="box text-center">
+        <h3>Медичні дані</h3>
+        <p>На даному сайті є можливість безпосередньо переглути медичні записи для Вас, якщо Ви є пацієнтом даного закладу.</p>
+        <a href="#" class="custom-button-white">Медична карта</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- welcome_docmed_area_start -->
+  <div class="welcome_docmed_area">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6">
+          <div class="welcome_thumb">
+            <div class="thumb_1">
+              <img src="{% static 'public/img/1.png' %}" alt="" />
+            </div>
+            <div class="thumb_2">
+              <img src="{% static 'public/img/2.png' %}" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+          <div class="welcome_docmed_info">
+            <h2>Ласкаво просимо до SaveHealth!</h2>
+            <h3>
+              Найкраща турбота про<br />
+              Ваше здоров'я
+            </h3>
+            <p>Надаємо комплексне медичне обслуговування з використанням сучасних технологій. Наш пріоритет — Ваша довіра та якість лікування на кожному етапі.</p>
+            <ul>
+              <li>
+                <i class="flaticon-right"></i> Комплексний підхід до кожного пацієнта.
+              </li>
+              <li>
+                <i class="flaticon-right"></i> Ведення електронних медичних записів
+              </li>
+              <li>
+                <i class="flaticon-right"></i> Доступ до сучасних методів діагностики та лікування.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- welcome_docmed_area_end -->
+{% endblock %}

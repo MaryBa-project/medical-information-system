@@ -1,0 +1,33 @@
+{% extends 'public/base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'public/css/for_index.css' %}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+{% endblock %}
+
+{% block content %}
+  <div class="single_slider d-flex align-items-center bg_1">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="slider_text">
+            <h3><span class="font-weight-bold">Контакти!</span></h3>
+            <p>Якщо у вас є будь-які питання або пропозиції зв'яжіться з нами за допомогою наступної інформації:</p>
+            <h5><span class="font-weight-bold">Адреса:</span> м. Київ, вул. Хрещатик, 1</h5>
+            <h5><span class="font-weight-bold">Соціальні мережі:</span></h5>
+            <div>
+              <i class="bi bi-send">Telegram: 010-020-0340</i>
+            </div>
+            <div>
+              <i class="bi bi-messenger">Mess: 010-020-0340</i>
+            </div>
+            <div>
+              <i class="bi bi-telephone-fill">Tel: 010-020-0340</i>
+            </div>
+            <i class="bi bi-envelope-fill">Email: info@company.com</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

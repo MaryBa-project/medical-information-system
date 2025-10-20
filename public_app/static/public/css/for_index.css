@@ -1,0 +1,305 @@
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* Банер */
+.single_slider {
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #ebeef1;
+  background-image: none;
+}
+
+@media (min-width: 768px) {
+  .bg_1 {
+    background-image: url("/static/public/img/banner.png");
+  }
+
+  .single_slider {
+    height: 100vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .single_slider {
+    height: 80vh;
+  }
+}
+
+
+
+/* Текст */
+.slider_text h3 span {
+  font-family: cursive;
+  font-size: 60px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .slider_text h3 {
+    font-size: 33px;
+    letter-spacing: 3px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .slider_text h3 {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .slider_text h3 {
+    font-size: 35px;
+    letter-spacing: 3px;
+  }
+}
+
+.slider_text p {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000A6;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .slider_text p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .slider_text p {
+    font-size: 16px;
+  }
+}
+
+/* Кнопки*/
+.custom-button-white {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  background-color: #f8f9fa;/* Колір фону */
+  color: #6c757d;/* Колір тексту */
+  text-decoration: none;/* Видалити підкреслення ссилки */
+  border-radius: 5px;/* Закругленість кутів */
+
+}
+
+.custom-button-white:active {
+  background-color: #e9ecef;/* Колір фону після натискання */
+}
+
+
+
+/* Квадратики  */
+.nav_box .container p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 26px;
+}
+
+.nav_box .container h3 {
+  font-size: 26px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.nav_box .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px auto;
+  max-width: 1000px;
+  align-items: stretch;
+}
+
+.container .box {
+  border-radius: 5%;
+  flex: 0 0 calc(33.33% - 10px);
+  background-color: #83C4FF;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  display: flex;/* Робимо сам блок Flex-контейнером */
+  flex-direction: column;/* Вміст розташовується вертикально */
+}
+
+.container .box .custom-button-white {
+  margin-top: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .container .box {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .container .box {
+    flex-basis: calc(100% - 20px);
+  }
+}
+
+.welcome_docmed_area {
+  padding-bottom: 220px;
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area {
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .welcome_docmed_area {
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .welcome_docmed_area {
+    padding-bottom: 100px;
+  }
+}
+
+.welcome_docmed_area .welcome_thumb {
+  position: relative;
+}
+
+.welcome_docmed_area .welcome_thumb .thumb_1 {
+  left: 0;
+}
+
+.welcome_docmed_area .welcome_thumb .thumb_1 img {
+  width: 60%;
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area .welcome_thumb .thumb_1 img {
+    width: 100%;
+  }
+}
+
+.welcome_docmed_area .welcome_thumb .thumb_2 {
+  position: absolute;
+  bottom: -94px;
+  right: -37px;
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area .welcome_thumb .thumb_2 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .welcome_docmed_area .welcome_thumb .thumb_2 {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+  }
+}
+
+.welcome_docmed_area .welcome_thumb .thumb_2 img {
+  width: 89%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .welcome_docmed_area .welcome_thumb .thumb_2 img {
+    width: 100%;
+  }
+}
+
+.welcome_docmed_area .welcome_docmed_info {
+  padding-left: 90px;
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area .welcome_docmed_info {
+    padding-left: 0;
+    margin-top: 40px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .welcome_docmed_area .welcome_docmed_info {
+    padding-left: 0;
+    margin-top: 100px;
+  }
+}
+
+.welcome_docmed_area .welcome_docmed_info h2 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #1F1F1F;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 9;
+  padding-bottom: 9px;
+}
+
+.welcome_docmed_area .welcome_docmed_info h2:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 50px;
+  background: #5DB2FF;
+}
+
+.welcome_docmed_area .welcome_docmed_info h3 {
+  font-weight: 500;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area .welcome_docmed_info h3 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .welcome_docmed_area .welcome_docmed_info h3 br {
+    display: none;
+  }
+}
+
+.welcome_docmed_area .welcome_docmed_info p {
+  font-size: 16px;
+  color: #727272;
+  line-height: 28px;
+}
+
+.welcome_docmed_area .welcome_docmed_info ul {
+  margin-bottom: 40px;
+  margin-top: 25px;
+}
+
+.welcome_docmed_area .welcome_docmed_info ul li {
+  color: #727272;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.welcome_docmed_area .welcome_docmed_info ul li i {
+  margin-right: 10px;
+  color: #83c4ff;
+  font-weight: 16px;
+}

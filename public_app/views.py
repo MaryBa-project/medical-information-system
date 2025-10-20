@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
+def index(request):
+  return render(request, 'public/index.html')
 
+def contacts(request):
+  return render(request, 'public/contacts.html')

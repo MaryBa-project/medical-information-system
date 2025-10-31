@@ -1,0 +1,58 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="single_slider">
+    <div class="text-container">
+        <h3> <span class="font-weight-bold">Авторизуйтесь!</span></h3>
+        <p>Введіть логін та пароль для доступу до іншого функціоналу сайту!<br>
+            Ми ніколи нікому не передамо Ваші данні.</p>
+    </div>
+</div>
+<div class="container mt-4 mb-4">
+    {% include "notification.html" %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="{% url 'user:login' %}" method='POST'>
+                {% csrf_token %}
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value={{request.GET.next}}>
+                {% endif %}
+
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Логін</label>
+                    <input type="text" class="form-control"
+                    name="username" id="id_username"
+                    value="{% if form.username.value %}{{form.username.value}}{% endif %}"
+                    placeholder="Введіть нік">
+                </div>
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" 
+                    name="password" id="id_password"
+                    placeholder="Введіть пароль">
+                </div>
+
+
+                {% comment %} {% for item in form %}
+                    <div class="mb-3">
+                        <label for="item" class="form-label">{{ item.label }}</label>
+                        {{ item }}
+                    </div>
+                {% endfor %} {% endcomment %}
+
+
+                <button type="submit" class="custom-button">Ввійти</button>
+            </form>
+            <div class="mb-3">
+                <p>Ви не зареєстровані? <a href="{% url 'user:registration' %}">Реєстрація</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

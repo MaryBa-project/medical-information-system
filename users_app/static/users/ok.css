@@ -1,0 +1,157 @@
+html, body {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+body{
+  background: #e4e8eb !important;
+}
+
+.media-body .btn {
+  margin-top: 30px; /* Додати верхній відступ між кнопками */
+}
+
+
+@media (max-width: 991px) {
+  .media-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+
+label.btn {
+  margin-bottom: 0;
+}
+
+.btn-outline-primary {
+  border-color: #26B4FF;
+  background: transparent;
+  color: #26B4FF;
+}
+.btn-outline-primary.disabled{
+  border-color: #6c757d;
+  background: #cccccc33;
+  color: #6c757d;
+
+}
+.btn {
+  cursor: pointer;
+
+}
+
+.text-light {
+  color: #babbbc !important;
+}
+
+
+.card {
+  background-clip: padding-box;
+  box-shadow: 10px 1px 4px #83c3ff77;
+  margin: 30px;
+}
+
+.row-bordered {
+  overflow: hidden;
+}
+
+.account-settings-fileinput {
+  position: absolute;
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.title_card{
+  font-weight: bold;
+  padding: 0.85rem 1.5rem;
+  color: #4E5155
+}
+
+@media (min-width: 993px) {
+  .title_card {
+    font-size: 24px;
+  }
+}
+@media (max-width: 992px) {
+  .title_card {
+    font-size: 19px;
+  }}
+
+
+.hr_cards{
+    border-color: rgb(138, 213, 241); /* Задаємо колір */
+    border-width: 2px; /* Задаємо товщину */
+    margin: 2px;
+}
+
+img .img-thumbnail, .card-img-left {
+  float: left;
+  height: 130px !important; 
+  padding: 10px;
+  max-width: 100%;}
+
+  .navbar-toggler {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem; /* Розмір значка три крапки */
+}
+
+/* Стилізація елементів меню */
+.list-group .nav-link {
+    padding: 15px;
+    border: none;
+}
+ 
+@media (max-width: 992px) {
+  img.img-fluid {
+    width: 100% !important;
+  }
+}
+
+/* Медіазапит для екранів менше 991px */
+@media (max-width: 991px) {
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center; /* центрування вмісту */
+    text-align: center; /* центрування тексту */
+  }
+
+  .bt-group {
+    display: flex;
+    flex-direction: column; /* кнопки одна під одною */
+    width: 100%; /* кнопки на всю ширину */
+  }
+
+  .bt-group .btn {
+    width: 100%; /* кнопки на всю ширину */
+    margin: 5px 0; /* відступ між кнопками */
+  }
+
+  .card-img-left {
+    float: none; /* знімаємо обтікання */
+    margin-right: 0; /* прибираємо правий відступ */
+    margin-bottom: 20px; /* додаємо відступ знизу */
+  }
+}

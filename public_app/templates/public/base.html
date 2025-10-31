@@ -16,12 +16,9 @@
     {% block content %}
     
     {% endblock %}
-    <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50">
-      <div class="container text-center">
-        <img src="{% static 'public/img/logo.png' %} " width="35" height="40" class="d-inline-block align-center" alt="Medical Logo" />
-        <small>Company &copy; Medical center</small>
-      </div>
-    </footer>
+    {% block footer %}
+
+    {% endblock %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

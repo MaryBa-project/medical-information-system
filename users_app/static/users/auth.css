@@ -1,0 +1,19 @@
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Для авторизації та реєстрації */
+  
+  .single_slider {
+    background-color: #e8eaee;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .text-container {
+    text-align: center;
+  }

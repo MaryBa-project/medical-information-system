@@ -15,26 +15,35 @@
     <!-- Правий блок з елементами навігації -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'admin:index' %}">Адмін панель</a>
-        </li>
+
+        {% if user.is_admin or user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">Адмін панель</a>
+          </li>
+        {% endif %}
+
         <li class="nav-item">
           <a class="nav-link" href="{% url "public:index" %}">Головна сторінка</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url "public:contacts" %}">Контакти</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'user:login' %}">Авторизація</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-circle"></i></a>
-          <div class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'user:profile' %}">Особистий кабінет</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url "user:logout" %}">Вийти</a>
-          </div>
-        </li>
+
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user:login' %}">Вхід</a>
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-circle"></i></a>
+            <div class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'user:profile' %}">Особистий кабінет</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url "user:logout" %}">Вийти</a>
+            </div>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>

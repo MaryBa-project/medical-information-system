@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib import auth
 from django.urls import reverse
-from users_app.forms import UserLoginForm
+from users_app.forms import UserLoginForm, UserRegForm
 
 def login(request):
   if request.method == 'POST':
@@ -23,13 +23,25 @@ def login(request):
   return render(request, 'users/login.html', context)
 
 
-
-
 def registration(request):
-  return render(request, 'users/reg.html')
+  if request.method == 'POST':
+    form = UserRegForm(data=request.POST)  # екземпляр форми логіну, що передає дані, які користувач ввів
+    if form.is_valid():
+      form.save()
+      # user = form.instance - екземпляр форми
+      # auth.login(request, user) - авто логін
+      # return HttpResponseRedirect(reverse('user:profile'))
+      return HttpResponseRedirect(reverse('user:login'))
+  else:
+    form = UserRegForm()
+  context = {'form': form}
+  return render(request, 'users/reg.html', context)
+
+
+def logout(request):
+  auth.logout(request)
+  return redirect(reverse('public:index'))
+
 
 def profile(request):
   return render(request, 'users/profile.html')
-
-def logout(request):
-  return render(request, 'users/logout.html')

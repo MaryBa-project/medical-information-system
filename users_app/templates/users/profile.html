@@ -1,11 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  ПРОФІЛЬ
-</body>
-</html>
+{% extends "base_ok.html" %}
+{% load static %}
+
+{% block dynamic_content %}
+<div class="tab-content">
+  <div class="tab-pane fade active show">
+    <div class="card-body media align-items-center">
+      <form action="{% url 'user:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col-md-5 mb-3 text-center">
+            {% if user.img %}
+              <img src="{{ user.img.url }}" alt="Фото профіля" class="img-fluid rounded">
+            {% else %}
+              <img src="{% static 'users/img/profile_img.png' %}" alt="Фото профіля" class="img-fluid rounded">
+            {% endif %}
+
+            <input type="file" class="form-control mt-3" id="id_img" name="img" accept="image/*">
+            <div class="text-light small mt-1">
+              Формати JPG, GIF, PNG. Максимальний об'єм 800кб
+            </div>
+
+            {% if form.img.errors %}
+              <div class="alert alert-danger alert-dismissible fade show">
+                {{ form.img.errors }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="id_last_name" class="form-label">Призвіще*</label>
+                <input type="text" class="form-control form-control-sm" id="id_last_name"
+                       name="last_name" placeholder="Введіть фамілію"
+                       value="{{ form.last_name.value }}" required>
+                {% if form.last_name.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ form.last_name.errors }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <label for="id_first_name" class="form-label">Ім'я*</label>
+                <input type="text" class="form-control form-control-sm" id="id_first_name"
+                       name="first_name" placeholder="Введіть ім'я"
+                       value="{{ form.first_name.value }}" required>
+                {% if form.first_name.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ form.first_name.errors }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label for="id_patronymic" class="form-label">По-батькові</label>
+                <input type="text" class="form-control form-control-sm" id="id_patronymic"
+                       name="patronymic" placeholder="Введіть по-батькові"
+                       value="{% if form.patronymic.value %}{{ form.patronymic.value }}{% endif %}">
+                {% if form.patronymic.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ form.patronymic.errors }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="id_sex" class="form-label">Стать</label>
+                <select class="form-select" id="id_sex" name="sex">
+                  <option value="" {% if not patient_form.sex.value %}selected{% endif %}>Не визначено</option>
+                  <option value="Ч" {% if patient_form.sex.value == "Ч" %}selected{% endif %}>Чоловік</option>
+                  <option value="Ж" {% if patient_form.sex.value == "Ж" %}selected{% endif %}>Жінка</option>
+                </select>
+                {% if patient_form.sex.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ patient_form.sex.errors }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="id_date_of_birth" class="form-label">Дата народження</label>
+                <input type="date" class="form-control form-control-sm" id="id_date_of_birth"
+                       name="date_of_birth"
+                       value="{{ patient_form.date_of_birth.value|date:'Y-m-d' }}">
+                {% if patient_form.date_of_birth.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ patient_form.date_of_birth.errors }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-6 mb-2">
+                <label for="id_stazh" class="form-label">Cтaж</label>
+                <input type="text" class="form-control form-control-sm" id="id_stazh"
+                       name="stazh" placeholder="Введіть стаж на посаді"
+                       value="{% if doctor_form.stazh.value %}{{ doctor_form.stazh.value }}{% endif %}">
+                {% if doctor_form.stazh.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ doctor_form.stazh.errors }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-6 mb-2">
+                <label for="id_specialization" class="form-label">Спеціалізація*</label>
+                <input type="text" class="form-control form-control-sm" id="id_specialization"
+                       name="specialization" placeholder="Введіть свою спеціалізацію"
+                       value="{% if doctor_form.specialization.value %}{{ doctor_form.specialization.value }}{% endif %}">
+                {% if doctor_form.specialization.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ doctor_form.specialization.errors }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary">
+              Зберегти зміни профілю
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h4 class="font-weight-bold mb-2">Умови прийому</h4>
+          <div class="col-md-8">
+            <div class="form-group">
+              <textarea class="form-control" id="id_Umovy_pryyomu" name="Umovy_pryyomu"
+                        placeholder="Умови прийому...">{% if doctor_form.Umovy_pryyomu.value %}{{ doctor_form.Umovy_pryyomu.value }}{% endif %}</textarea>
+              {% if doctor_form.Umovy_pryyomu.errors %}
+                <div class="alert alert-danger alert-dismissible fade show">
+                  {{ doctor_form.Umovy_pryyomu.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h3 class="font-weight-bold">Контактні дані</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="id_email" class="form-label">Email*</label>
+                <input type="email" class="form-control form-control-sm" id="id_email"
+                       name="email" placeholder="Ввeдіть електронну пошту"
+                       value="{{ form.email.value }}" required>
+                {% if form.email.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ form.email.errors }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="id_phone_number" class="form-label">Номер телефону*</label>
+                <input type="text" class="form-control form-control-sm" id="id_phone_number"
+                       name="phone_number" placeholder="Ввeдіть контактний номер"
+                       value="{{ form.phone_number.value }}" required>
+                {% if form.phone_number.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">
+                    {{ form.phone_number.errors }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

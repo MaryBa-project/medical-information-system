@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from users_app.models import CustomUser
+from phonenumber_field.formfields import PhoneNumberField
 
 class UserLoginForm(AuthenticationForm):
   username = forms.CharField()
@@ -28,3 +29,11 @@ class UserRegForm(UserCreationForm):
     model = CustomUser
     fields = ("first_name", "last_name", "username",
                   "email", "phone_number", "password1", "password2",)
+
+
+class ProfileForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ("img", "first_name", "last_name",
+                  "patronymic", "email", "phone_number",
+                  )

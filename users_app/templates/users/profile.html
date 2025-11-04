@@ -9,27 +9,39 @@
         {% csrf_token %}
 
         <div class="row">
-          <div class="col-md-5 mb-3 text-center">
+<div class="col-md-5 mb-3 text-center">
             {% if user.img %}
-              <img src="{{ user.img.url }}" alt="Фото профіля" class="img-fluid rounded">
+                <img src="{{ user.img.url }}"
+                    alt="Фото профіля" class="img-fluid rounded">
             {% else %}
-              <img src="{% static 'users/img/profile_img.png' %}" alt="Фото профіля" class="img-fluid rounded">
+                <img src="{% static 'cards_app/img/images.png' %}"
+                    alt="Фото профіля" class="img-fluid rounded">
             {% endif %}
+            <input type="file" class="form-control mt-3" id="id_img"
+                name='img'
+                accept="image/*">
+                <div class="text-light small mt-1">Формати JPG, GIF, PNG. Максимальний об'єм 800кб</div>
 
-            <input type="file" class="form-control mt-3" id="id_img" name="img" accept="image/*">
-            <div class="text-light small mt-1">
-              Формати JPG, GIF, PNG. Максимальний об'єм 800кб
-            </div>
-
-            {% if form.img.errors %}
-              <div class="alert alert-danger alert-dismissible fade show">
-                {{ form.img.errors }}
-              </div>
-            {% endif %}
+                {% if form.img.errors %}
+                <div class="alert alert-danger alert-dismissible fade show">{{form.img.errors}}</div>
+                {% endif %}
           </div>
 
           <div class="col-md-7">
             <div class="row">
+              <div class="col-md-12 mb-2">
+                
+                {% if not "ПАЦІЄНТИ" %}
+                  {% if "ЛІКАРІ" in user_groups %}
+                      <h6>Табельний номер працівника:{{ user.doctor.tab_nomer|default:"(Профіль не знайдено)" }}</h6>
+                  {% elif "МЕД.ПЕРСОНАЛ" in user_groups %}
+                      <h6>Табельний номер працівника:{{ user.personnel.tab_nomer|default:"(Профіль не знайдено)" }}</h6>
+                  {% elif "ЛАБОРАНТИ" in user_groups %}
+                      <h6>Табельний номер працівника:{{ user.laboratoryassistent.tab_nomer|default:"(Профіль не знайдено)" }}</h6> 
+                  {% endif %}
+                {% endif %}
+              </div>
+
               <div class="col-md-12 mb-3">
                 <label for="id_last_name" class="form-label">Призвіще*</label>
                 <input type="text" class="form-control form-control-sm" id="id_last_name"
@@ -67,68 +79,136 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="id_sex" class="form-label">Стать</label>
-                <select class="form-select" id="id_sex" name="sex">
-                  <option value="" {% if not patient_form.sex.value %}selected{% endif %}>Не визначено</option>
-                  <option value="Ч" {% if patient_form.sex.value == "Ч" %}selected{% endif %}>Чоловік</option>
-                  <option value="Ж" {% if patient_form.sex.value == "Ж" %}selected{% endif %}>Жінка</option>
-                </select>
-                {% if patient_form.sex.errors %}
-                  <div class="alert alert-danger alert-dismissible fade show">
-                    {{ patient_form.sex.errors }}
-                  </div>
-                {% endif %}
-              </div>
 
-              <div class="col-md-6 mb-3">
-                <label for="id_date_of_birth" class="form-label">Дата народження</label>
-                <input type="date" class="form-control form-control-sm" id="id_date_of_birth"
-                       name="date_of_birth"
-                       value="{{ patient_form.date_of_birth.value|date:'Y-m-d' }}">
-                {% if patient_form.date_of_birth.errors %}
-                  <div class="alert alert-danger alert-dismissible fade show">
-                    {{ patient_form.date_of_birth.errors }}
-                  </div>
-                {% endif %}
-              </div>
 
-              <div class="col-md-6 mb-2">
-                <label for="id_stazh" class="form-label">Cтaж</label>
-                <input type="text" class="form-control form-control-sm" id="id_stazh"
-                       name="stazh" placeholder="Введіть стаж на посаді"
-                       value="{% if doctor_form.stazh.value %}{{ doctor_form.stazh.value }}{% endif %}">
-                {% if doctor_form.stazh.errors %}
-                  <div class="alert alert-danger alert-dismissible fade show">
-                    {{ doctor_form.stazh.errors }}
-                  </div>
-                {% endif %}
-              </div>
+              {% if "ПАЦІЄНТИ" in user_groups %}
+                <div class="col-md-6 mb-3">
+                  <label for="id_p-sex" class="form-label">Стать</label>
+                  <select class="form-select" id="id_p-sex" name="p-sex">
+                    <option value="" {% if not patient_form.sex.value %}selected{% endif %}>Не визначено</option>
+                    <option value="Ч" {% if patient_form.sex.value == "Ч" %}selected{% endif %}>Чоловік</option>
+                    <option value="Ж" {% if patient_form.sex.value == "Ж" %}selected{% endif %}>Жінка</option>
+                  </select>
+                  {% if patient_form.sex.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ patient_form.sex.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_p-date_of_birth" class="form-label">Дата народження</label>
+                  <input type="date" class="form-control form-control-sm" id="id_p-date_of_birth"
+                        name="p-date_of_birth"
+                        value="{{ patient_form.date_of_birth.value|date:'Y-m-d' }}">
+                  {% if patient_form.date_of_birth.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ patient_form.date_of_birth.errors }}
+                    </div>
+                  {% endif %}
+                </div>
 
-              <div class="col-md-6 mb-2">
-                <label for="id_specialization" class="form-label">Спеціалізація*</label>
-                <input type="text" class="form-control form-control-sm" id="id_specialization"
-                       name="specialization" placeholder="Введіть свою спеціалізацію"
-                       value="{% if doctor_form.specialization.value %}{{ doctor_form.specialization.value }}{% endif %}">
-                {% if doctor_form.specialization.errors %}
-                  <div class="alert alert-danger alert-dismissible fade show">
-                    {{ doctor_form.specialization.errors }}
-                  </div>
-                {% endif %}
-              </div>
+
+              {% elif "ЛІКАРІ" in user_groups %}
+                <div class="col-md-6 mb-2">
+                  <label for="id_d-stazh" class="form-label">Cтaж</label>
+                  <input type="text" class="form-control form-control-sm" id="id_d-stazh"
+                        name="d-stazh" placeholder="Введіть стаж на посаді"
+                        value="{% if doctor_form.stazh.value %}{{ doctor_form.stazh.value }}{% endif %}">
+                  {% if doctor_form.stazh.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ doctor_form.stazh.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="id_d-specialization" class="form-label">Спеціалізація*</label>
+                  <input type="text" class="form-control form-control-sm" id="id_d-specialization"
+                        name="d-specialization" placeholder="Введіть свою спеціалізацію"
+                        value="{% if doctor_form.specialization.value %}{{ doctor_form.specialization.value }}{% endif %}">
+                  {% if doctor_form.specialization.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ doctor_form.specialization.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+
+
+              {% elif "ЛАБОРАНТИ" in user_groups %}
+                <div class="col-md-6 mb-2">
+                  <label for="id_lab-stazh" class="form-label">Cтaж</label>
+                  <input type="text" class="form-control form-control-sm" id="id_lab-stazh"
+                        name="lab-stazh" placeholder="Введіть стаж на посаді"
+                        value="{% if assistant_form.stazh.value %}{{ assistant_form.stazh.value }}{% endif %}">
+                  {% if assistant_form.stazh.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ assistant_form.stazh.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="id_lab-specialization" class="form-label">Спеціалізація*</label>
+                  <input type="text" class="form-control form-control-sm" id="id_lab-specialization"
+                        name="lab-specialization" placeholder="Введіть свою спеціалізацію"
+                        value="{% if assistant_form.specialization.value %}{{ assistant_form.specialization.value }}{% endif %}">
+                  {% if assistant_form.specialization.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                      {{ assistant_form.specialization.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+                
+                
+              {% elif "МЕД.ПЕРСОНАЛ" in user_groups %}
+               <div class="col-md-6 mb-2">
+                 <label for="id_med-p-stazh" class="form-label">Cтaж</label>
+                 <input type="text" class="form-control form-control-sm" id="id_med-p-stazh"
+                   name="med-p-stazh" placeholder="Введіть стаж на посаді"
+                   value="{% if personnel_form.stazh.value %}{{ personnel_form.stazh.value }}{% endif %}">
+                 {% if personnel_form.stazh.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show">
+                     {{ personnel_form.stazh.errors }}
+                   </div>
+                 {% endif %}
+               </div>
+               <div class="col-md-6 mb-2">
+                 <label for="id_med-p-department" class="form-label">Відділення*</label>
+                 <input type="text" class="form-control form-control-sm" id="id_med-p-department"
+                   name="med-p-department" placeholder="Введіть назву відділення"
+                   value="{% if personnel_form.department.value %}{{ personnel_form.department.value }}{% endif %}">
+                 {% if personnel_form.department.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show">
+                     {{ personnel_form.department.errors }}
+                   </div>
+                 {% endif %}
+               </div>
+               <div class="col-md-6 mb-2">
+                 <label for="id_med-p-position" class="form-label">Посада*</label>
+                 <input type="text" class="form-control form-control-sm" id="id_med-p-position"
+                   name="med-p-position" placeholder="Введіть назву посади"
+                   value="{% if personnel_form.position.value %}{{ personnel_form.position.value }}{% endif %}">
+                 {% if personnel_form.position.errors %}
+                   <div class="alert alert-danger alert-dismissible fade show">
+                     {{ personnel_form.position.errors }}
+                   </div>
+                 {% endif %}
+               </div>
+             {% endif %}
+              <div class="col-md-6 mb-2 d-flex align-items-end"> 
+                 <button type="submit" class="btn btn-outline-primary w-100">
+                   Зберегти зміни профілю
+                 </button>
+               </div>
             </div>
 
-            <button type="submit" class="btn btn-outline-primary">
-              Зберегти зміни профілю
-            </button>
+
           </div>
         </div>
-
+        {% if "ЛІКАРІ" in user_groups %}
         <div class="card-body">
           <h4 class="font-weight-bold mb-2">Умови прийому</h4>
           <div class="col-md-8">
             <div class="form-group">
-              <textarea class="form-control" id="id_Umovy_pryyomu" name="Umovy_pryyomu"
+              <textarea class="form-control" id="id_d-Umovy_pryyomu" name="d-Umovy_pryyomu"
                         placeholder="Умови прийому...">{% if doctor_form.Umovy_pryyomu.value %}{{ doctor_form.Umovy_pryyomu.value }}{% endif %}</textarea>
               {% if doctor_form.Umovy_pryyomu.errors %}
                 <div class="alert alert-danger alert-dismissible fade show">
@@ -138,6 +218,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
 
         <div class="card-body">
           <h3 class="font-weight-bold">Контактні дані</h3>

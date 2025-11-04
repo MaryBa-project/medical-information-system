@@ -17,9 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from SaveHealth import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('root/', admin.site.urls), #mysite.com/root
     path('', include('public_app.urls', namespace='public')), # з'єднання з public_app
     path('user/', include('users_app.urls', namespace='user')) # з'єднання з users_app
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

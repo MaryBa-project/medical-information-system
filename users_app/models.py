@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 
 class CustomUser(AbstractUser): 
-  img = models.ImageField(upload_to='media/users_img', blank=True, null=True, verbose_name='Фото')
+  img = models.ImageField(upload_to='users_img', blank=True, null=True, verbose_name='Фото')
   email = models.EmailField(unique=True, verbose_name= 'Email')
   first_name = models.CharField(max_length=100, verbose_name= 'Iмя')
   last_name = models.CharField(max_length=100, verbose_name= 'Призвіще')

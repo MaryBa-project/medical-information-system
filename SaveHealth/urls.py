@@ -23,7 +23,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('root/', admin.site.urls), #mysite.com/root
     path('', include('public_app.urls', namespace='public')), # з'єднання з public_app
-    path('user/', include('users_app.urls', namespace='user')) # з'єднання з users_app
+    path('user/', include('users_app.urls', namespace='user')), # з'єднання з users_app
+    path('profile/med_card/', include('cards_app.urls', namespace='card')), # з'єднання з cards_app
+    path('profile/laboratory/', include('laboratory_app.urls', namespace='laboratory')) # з'єднання з laboratory_app
 
 ]
 

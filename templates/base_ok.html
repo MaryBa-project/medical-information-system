@@ -28,6 +28,61 @@
                 <li class="nav-item">
                   <a class="nav-link text-center" href="{% url 'user:profile' %}">Особистий кабінет</a>
                 </li>
+                <hr class='hr_cards'>
+                {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:all_cards' %}">Медичні картки</a>
+                  </li>
+                  {% if card %}
+                    <hr class='hr_cards'>
+                    <li class="nav-item">
+                      <a class="nav-link text-center" href="{% url 'card:index' card.display_id %}">Загальна інформація</a>
+                    </li>
+                    <hr class='hr_cards'>
+                    <li class="nav-item">
+                      <a class="nav-link text-center" href="{% url 'card:vaccine' card.display_id %}">Щеплення</a>
+                    </li>
+                    <hr class='hr_cards'>
+                    <li class="nav-item">
+                      <a class="nav-link text-center" href="{% url 'card:referral' card.display_id %}">Направлення</a>
+                    </li>
+                    <hr class='hr_cards'>
+                    <li class="nav-item">
+                      <a class="nav-link text-center" href="{% url 'card:result_analysis' card.display_id %}">Результати аналізів</a>
+                    </li>
+                  {% endif %}
+
+                {% elif "ПАЦІЄНТИ" in user_groups %}
+                  <li class="nav-item">
+                    <h5 class="font-weight-bold mb-3 mt-3 text-center">Медична карта</h5>
+                  </li>
+                  <hr class='hr_cards'>
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:card_profile'%}">Загальна інформація</a>
+                  </li>
+                  <hr class='hr_cards'>
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:vaccine_profile'%}">Щеплення</a>
+                  </li>
+                  <hr class='hr_cards'>
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:referral_profile'%}">Направлення</a>
+                  </li>
+                  <hr class='hr_cards'>
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:result_analysis_profile'%}">Результати аналізів</a>
+                  </li>
+
+
+                {% elif "ЛАБОРАНТИ" in user_groups %}
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'laboratory:lab_journal'%}">Лабораторний журнал</a>
+                  </li>
+                  <hr class='hr_cards'>
+                  <li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'laboratory:lab_norms'%}">Реєстр нормативних значень</a>
+                  </li>
+                {% endif %}
               </ul>
             </div>
           </div>

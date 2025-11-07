@@ -78,6 +78,7 @@ class Patient(models.Model):
 class FamilyDoctor(models.Model):
   patient = models.ForeignKey(Patient, on_delete=models.CASCADE, verbose_name='Пацієнт')
   doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE,verbose_name='Лікар')
+  date_of_appointment = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='Дата призначення')
   class Meta:
     db_table = 'FamilyDoctor'
     verbose_name = 'Сімейного лікаря'

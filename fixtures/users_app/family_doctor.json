@@ -1,0 +1,29 @@
+[
+{
+  "model": "users_app.familydoctor",
+  "pk": 3,
+  "fields": {
+    "patient": 1,
+    "doctor": "DOC-33333",
+    "date_of_appointment": "2025-11-07T20:33:14.364Z"
+  }
+},
+{
+  "model": "users_app.familydoctor",
+  "pk": 4,
+  "fields": {
+    "patient": 2,
+    "doctor": "DOC-33333",
+    "date_of_appointment": "2025-11-07T20:33:31.531Z"
+  }
+},
+{
+  "model": "users_app.familydoctor",
+  "pk": 5,
+  "fields": {
+    "patient": 4,
+    "doctor": "DOC-44444",
+    "date_of_appointment": "2025-11-07T20:33:44.944Z"
+  }
+}
+]

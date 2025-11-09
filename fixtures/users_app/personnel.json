@@ -1,0 +1,22 @@
+[
+{
+  "model": "users_app.personnel",
+  "pk": "MEDP-11111",
+  "fields": {
+    "user": 11,
+    "stazh": null,
+    "department": "Швидка допомога",
+    "position": null
+  }
+},
+{
+  "model": "users_app.personnel",
+  "pk": "MEDP-12345",
+  "fields": {
+    "user": 10,
+    "stazh": null,
+    "department": "Терапевтичне",
+    "position": null
+  }
+}
+]

@@ -1,0 +1,112 @@
+[
+{
+    "model": "cards_app.vaccination",
+    "pk": 1,
+    "fields": {
+        "name": "Вітряна віспа",
+        "dose_number": 2,
+        "age": "Від 9 місяців та дорослим, які не хворіли",
+        "active_substance": null,
+        "input_method": "Підшкірна"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 2,
+    "fields": {
+        "name": "DTaP (дифтерія, правець, кашлюк)",
+        "dose_number": 5,
+        "age": "Від 2 місяців до 6 років",
+        "active_substance": "Антигени дифтерії, кашлюку, правцю (ацелюлярні)",
+        "input_method": "Внутрішньом'язова"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 3,
+    "fields": {
+        "name": "Covid-19",
+        "dose_number": 2,
+        "age": "Від 12 років",
+        "active_substance": "Інактивований або мРНК-антиген SARS-CoV-2",
+        "input_method": "Внутрішньом'язова"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 4,
+    "fields": {
+        "name": "Гепатит B",
+        "dose_number": 3,
+        "age": "Від народження (0, 1, 6 міс.)",
+        "active_substance": null,
+        "input_method": "Внутрішньом'язова"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 5,
+    "fields": {
+        "name": "Гепатит A",
+        "dose_number": 2,
+        "age": "Від 1 року",
+        "active_substance": null,
+        "input_method": "Внутрішньом'язова"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 6,
+    "fields": {
+        "name": "КПК (кір, паротит, краснуха)",
+        "dose_number": 2,
+        "age": "12 міс. і 6 років",
+        "active_substance": null,
+        "input_method": "Підшкірна"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 7,
+    "fields": {
+        "name": "Поліомієліт (ОПВ / ІПВ)",
+        "dose_number": 4,
+        "age": "З 2 місяців",
+        "active_substance": "Ослаблений або інактивований вірус поліомієліту",
+        "input_method": "Перорально"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 8,
+    "fields": {
+        "name": "Менінгококова інфекція",
+        "dose_number": 2,
+        "age": "З 12 місяців (або пізніше)",
+        "active_substance": "Полісахарид менінгококів",
+        "input_method": "Внутрішньом'язова"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 9,
+    "fields": {
+        "name": "Ротавірусна інфекція",
+        "dose_number": 3,
+        "age": "6 тижнів – 6 місяців",
+        "active_substance": "Ослаблений ротавірус",
+        "input_method": "Перорально"
+    }
+},
+{
+    "model": "cards_app.vaccination",
+    "pk": 10,
+    "fields": {
+        "name": "Грип (сезонна вакцина)",
+        "dose_number": 1,
+        "age": "З 6 місяців",
+        "active_substance": "Ослаблений або інактивований вірус грипу",
+        "input_method": "Внутрішньом'язова"
+    }
+}
+]

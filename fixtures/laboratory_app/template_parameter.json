@@ -1,0 +1,211 @@
+[
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 1,
+    "fields": {
+        "name": "Гемоглобін",
+        "unit_of_measurement": "г/л",
+        "normal_min": "120.000",
+        "normal_max": "160.000",
+        "type_analys": 1
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 2,
+    "fields": {
+        "name": "Еритроцити",
+        "unit_of_measurement": "×10⁶/мкл",
+        "normal_min": "3.800",
+        "normal_max": "5.200",
+        "type_analys": 1
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 3,
+    "fields": {
+        "name": "Лейкоцити",
+        "unit_of_measurement": "×10⁹/л",
+        "normal_min": "4.000",
+        "normal_max": "9.000",
+        "type_analys": 1
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 4,
+    "fields": {
+        "name": "Тромбоцити",
+        "unit_of_measurement": "×10⁹/л",
+        "normal_min": "150.000",
+        "normal_max": "400.000",
+        "type_analys": 1
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 5,
+    "fields": {
+        "name": "Гематокрит",
+        "unit_of_measurement": "%",
+        "normal_min": "36.000",
+        "normal_max": "46.000",
+        "type_analys": 1
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 6,
+    "fields": {
+        "name": "Глюкоза",
+        "unit_of_measurement": "ммоль/л",
+        "normal_min": "3.500",
+        "normal_max": "6.100",
+        "type_analys": 2
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 7,
+    "fields": {
+        "name": "Білірубін загальний",
+        "unit_of_measurement": "мкмоль/л",
+        "normal_min": "3.000",
+        "normal_max": "21.000",
+        "type_analys": 2
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 8,
+    "fields": {
+        "name": "Креатинін",
+        "unit_of_measurement": "мкмоль/л",
+        "normal_min": "44.000",
+        "normal_max": "97.000",
+        "type_analys": 2
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 9,
+    "fields": {
+        "name": "Сечовина",
+        "unit_of_measurement": "ммоль/л",
+        "normal_min": "2.500",
+        "normal_max": "8.300",
+        "type_analys": 2
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 10,
+    "fields": {
+        "name": "АЛТ (аланінамінотрансфераза)",
+        "unit_of_measurement": "Од/л",
+        "normal_min": "0.000",
+        "normal_max": "35.000",
+        "type_analys": 2
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 11,
+    "fields": {
+        "name": "Щільність",
+        "unit_of_measurement": "г/мл",
+        "normal_min": "1.010",
+        "normal_max": "1.025",
+        "type_analys": 3
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 12,
+    "fields": {
+        "name": "pH",
+        "unit_of_measurement": "pH",
+        "normal_min": "5.000",
+        "normal_max": "7.500",
+        "type_analys": 3
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 13,
+    "fields": {
+        "name": "Білок",
+        "unit_of_measurement": "г/л",
+        "normal_min": "0.000",
+        "normal_max": "0.140",
+        "type_analys": 3
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 14,
+    "fields": {
+        "name": "Лейкоцити",
+        "unit_of_measurement": "у п/зору",
+        "normal_min": "0.000",
+        "normal_max": "5.000",
+        "type_analys": 3
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 15,
+    "fields": {
+        "name": "ТТГ (тиреотропний гормон)",
+        "unit_of_measurement": "мМО/л",
+        "normal_min": "0.400",
+        "normal_max": "4.000",
+        "type_analys": 4
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 16,
+    "fields": {
+        "name": "Т4 вільний",
+        "unit_of_measurement": "пмоль/л",
+        "normal_min": "10.000",
+        "normal_max": "23.000",
+        "type_analys": 4
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 17,
+    "fields": {
+        "name": "Естрадіол",
+        "unit_of_measurement": "пг/мл",
+        "normal_min": "30.000",
+        "normal_max": "400.000",
+        "type_analys": 4
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 18,
+    "fields": {
+        "name": "Тестостерон",
+        "unit_of_measurement": "нг/дл",
+        "normal_min": "300.000",
+        "normal_max": "1000.000",
+        "type_analys": 4
+    }
+},
+{
+    "model": "laboratory_app.templateparameter",
+    "pk": 19,
+    "fields": {
+        "name": "Пролактин",
+        "unit_of_measurement": "нг/мл",
+        "normal_min": "4.000",
+        "normal_max": "23.000",
+        "type_analys": 4
+    }
+}
+]

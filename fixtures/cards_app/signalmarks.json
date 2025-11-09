@@ -1,0 +1,72 @@
+[
+{
+    "model": "cards_app.signalmarks",
+    "pk": 1,
+    "fields": {
+        "name": "Група крові"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 2,
+    "fields": {
+        "name": "Резус"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 3,
+    "fields": {
+        "name": "Інфекційні захворювання"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 4,
+    "fields": {
+        "name": "Цукровий діабет"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 5,
+    "fields": {
+        "name": "Хірургічні втручання"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 6,
+    "fields": {
+        "name": "Алергії"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 7,
+    "fields": {
+        "name": "Переливання крові"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 8,
+    "fields": {
+        "name": "Бронхіальна астма"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 9,
+    "fields": {
+        "name": "Епілепсія"
+    }
+},
+{
+    "model": "cards_app.signalmarks",
+    "pk": 10,
+    "fields": {
+        "name": "Онкологічні захворювання"
+    }
+}
+]

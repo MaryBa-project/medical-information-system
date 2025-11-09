@@ -1,0 +1,20 @@
+[
+{
+  "model": "users_app.laboratoryassistent",
+  "pk": "LAB-12345",
+  "fields": {
+    "user": 6,
+    "stazh": null,
+    "specialization": "Клінічний лаборант"
+  }
+},
+{
+  "model": "users_app.laboratoryassistent",
+  "pk": "LAB-22334",
+  "fields": {
+    "user": 7,
+    "stazh": null,
+    "specialization": "Біохімія"
+  }
+}
+]

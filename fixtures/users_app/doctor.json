@@ -1,0 +1,42 @@
+[
+{
+  "model": "users_app.doctor",
+  "pk": "DOC-11111",
+  "fields": {
+    "user": 4,
+    "stazh": "10 років",
+    "specialization": "Педіатр",
+    "Umovy_pryyomu": null
+  }
+},
+{
+  "model": "users_app.doctor",
+  "pk": "DOC-22222",
+  "fields": {
+    "user": 5,
+    "stazh": null,
+    "specialization": "Офтальмолог",
+    "Umovy_pryyomu": null
+  }
+},
+{
+  "model": "users_app.doctor",
+  "pk": "DOC-33333",
+  "fields": {
+    "user": 2,
+    "stazh": "6 місяців",
+    "specialization": "Терапевт",
+    "Umovy_pryyomu": null
+  }
+},
+{
+  "model": "users_app.doctor",
+  "pk": "DOC-44444",
+  "fields": {
+    "user": 3,
+    "stazh": "2 роки",
+    "specialization": "Терапевт",
+    "Umovy_pryyomu": null
+  }
+}
+]

@@ -1,0 +1,92 @@
+[
+{
+  "model": "cards_app.individualmarks",
+  "pk": 1,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 1,
+    "value": "III"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 2,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 2,
+    "value": "+"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 3,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 3,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 4,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 4,
+    "value": "2 тип"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 5,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 5,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 6,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 6,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 7,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 7,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 8,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 8,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 9,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 9,
+    "value": "Не виявлено"
+  }
+},
+{
+  "model": "cards_app.individualmarks",
+  "pk": 10,
+  "fields": {
+    "medcard": 1,
+    "signal_mark": 10,
+    "value": "Не виявлено"
+  }
+}
+]

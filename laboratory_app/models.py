@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 class MedReferral(models.Model):
   doctor = models.ForeignKey('users_app.Doctor', on_delete=models.SET_NULL, blank=True, null=True, 
@@ -30,14 +31,19 @@ class TypeAnalysis(models.Model):
 class TemplateParameter(models.Model):
   name = models.CharField(max_length=100, verbose_name='Назва параметру')
   unit_of_measurement = models.CharField(max_length=20, verbose_name='Одиниці вимірювання')
-  normal_min = models.DecimalField(max_digits=6,decimal_places=3, verbose_name='Мінімально допустиме значення')
-  normal_max = models.DecimalField(max_digits=6,decimal_places=3, verbose_name='Максимально допустиме значення')
+  normal_min = models.DecimalField(max_digits=7,decimal_places=3, verbose_name='Мінімально допустиме значення')
+  normal_max = models.DecimalField(max_digits=7,decimal_places=3, verbose_name='Максимально допустиме значення')
   type_analys = models.ForeignKey('TypeAnalysis', on_delete=models.CASCADE, verbose_name='ID типу аналізу')
   class Meta:
     db_table = 'TemplateParameter'
     verbose_name = 'Шаблон параметру'
     verbose_name_plural = 'Шаблони параметрів'
     unique_together = ('name', 'type_analys')
+  def clean(self):
+    super().clean()
+    if self.normal_max <= self.normal_min:
+      raise ValidationError({
+        'normal_max': 'Максимальне значення має бути більшим за мінімальне.'})
   def __str__(self):
     return f'{self.id} - {self.name}'
 

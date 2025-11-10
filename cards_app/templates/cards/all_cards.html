@@ -2,7 +2,43 @@
 {% load static %}
 
 {% block dynamic_content %}
- <h1>Всі карти</h1>  
+  {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+    {% for pat in patients_with_cards%}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="font-weight-bold mb-3">{{ pat.user.last_name }} {{ pat.user.first_name }}
+            {% if pat.user.patronymic %}{{ pat.user.patronymic }}{% endif %}</h5>
+
+
+            {% if pat.user.img %}
+              <img src="{{ pat.user.img.url }}" alt="Зображення" class="card-img-left">
+            {% else %}
+              <img src="{% static 'users/img/profile_img.png' %}" alt="Зображення" class="card-img-left">
+            {% endif %}
+          
+          {% if pat.id_doctor.exists %}
+            {% for doctor in pat.id_doctor.all %}
+              <p class="card-text">Cімейний лікар: {{ doctor.user.last_name }} {{ doctor.user.first_name }}
+              {% if doctor.user.patronymic %}{{ doctor.user.patronymic }}{% endif %}</p>
+            {% endfor %}
+          {% else %}
+            <p class="card-text">Cімейний лікар: не призначено</p>
+          {% endif %}
+
+          {% if pat.medcards %}<p class="card-text">ID-картки: {{ pat.medcards.display_id }}</p>{% endif %}
+
+          <p class="card-text">Телефон пацієнта: {{ pat.user.phone_number }}</p>
+          <div class="bt-group">
+            {% if pat in card_active_redact %}
+              <a href={% url "cards_app:index" pat.medcards.display_id %} class="btn btn-outline-primary">Перегляд та редагування</a>
+            {% else %}
+              <a href={% url "cards_app:index" pat.medcards.display_id %} class="btn btn-outline-primary">Перегляд</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 
 </body>

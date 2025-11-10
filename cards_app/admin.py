@@ -12,14 +12,16 @@ from .models import MedCards, SignalMarks, IndividualMarks, Vaccination, CardVac
 
 
 # Адмінка для MedCards
-# class MedCardsAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'patient', 'doctor', 'dispensary_group', 'registration_date')
+class MedCardsAdmin(admin.ModelAdmin):
+  list_display = ('id', 'patient', 'doctor', 'dispensary_group', 'registration_date')
 #     search_fields = ('patient__full_name', 'doctor__last_name', 'slug') 
-#     readonly_fields = ('registration_date',) 
+  readonly_fields = ('registration_date','patient', 'doctor',) 
 #     inlines = [IndividualMarksInline, DoctorExaminationInline]
+admin.site.register(MedCards, MedCardsAdmin)
+
+
 
 admin.site.register(IndividualMarks)
-admin.site.register(MedCards)
 admin.site.register(SignalMarks)
 admin.site.register(Vaccination)
 admin.site.register(CardVaccine) 

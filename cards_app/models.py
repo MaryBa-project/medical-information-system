@@ -71,8 +71,7 @@ class CardVaccine(models.Model):
   contraindication  = models.TextField(max_length=300, verbose_name='Протипоказання')
   product_series = models.CharField(max_length=20, verbose_name= 'Серія вакцини')
   medcard = models.ForeignKey('MedCards', on_delete=models.CASCADE, verbose_name='Номер медичної карти')
-  vaccination = models.ForeignKey('Vaccination', on_delete=models.SET_NULL, blank=True, null=True, 
-                                  verbose_name='Найменування щеплення')
+  vaccination = models.ForeignKey('Vaccination', on_delete=models.PROTECT, verbose_name='Найменування щеплення')
   class Meta:
     db_table = 'CardVaccine'
     verbose_name = 'Щеплень в медичній карті'
@@ -86,7 +85,7 @@ class DoctorExamination(models.Model):
   cabinet = models.CharField(max_length=10, blank=True, null=True, verbose_name='Кабінет')
   date_visit = models.DateField(verbose_name='Дата прийому')
   report = models.TextField(max_length=1500, verbose_name='Висновки')
-  doctor = models.ForeignKey('users_app.Doctor', on_delete=models.SET_NULL, blank=True, null=True,
+  doctor = models.ForeignKey('users_app.Doctor', on_delete=models.PROTECT,
                               verbose_name='Табельний номер лікаря')
   medcard = models.ForeignKey('MedCards', on_delete=models.CASCADE, verbose_name='Номер медичної карти')
   class Meta:

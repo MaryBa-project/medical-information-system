@@ -15,9 +15,18 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
+@admin.register(FamilyDoctor)
+class FamilyDoctorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'patient', 'doctor')
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "doctor":
+            kwargs["queryset"] = Doctor.objects.filter(specialization="Терапевт")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Patient)
-admin.site.register(FamilyDoctor)
 
 
 # --- Базовий клас для генерації табельного номера ---

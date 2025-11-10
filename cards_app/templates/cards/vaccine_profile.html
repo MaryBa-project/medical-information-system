@@ -1,8 +1,61 @@
 {% extends "base_ok.html" %}
 {% load static %}
 
+{% block css %}
+  <style>
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Додає інерційну прокрутку на iOS */
+    }
+  </style>
+{% endblock %}
+
+
 {% block dynamic_content %}
- <h1>Вакцинація пацієнта</h1>  
+
+{% if not card.doctor %}
+  {% include 'not_family_doc.html' %}
+{% endif %}
+
+{% if card_vaccinations %}
+
+
+  <div class="table-responsive">
+    <h2 class="font-weight-bold text-center py-4">Мої щеплення</h2>
+    
+      <table class="table table-hover">
+        <thead>
+          <tr class='font-weight-bold'>
+            <th scope="col">#</th>
+            <th scope="col">Назва вакцини</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Серія</th>
+            <th scope="col">Реакція</th>
+            <th scope="col">Протипоказання</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in card_vaccinations %}
+          <tr>
+            <th class='font-weight-bold'>{{ forloop.counter }}</th>
+            <td>{{ record.vaccination.name }}</td>
+            <td>{{ record.date_vaccine }}</td>
+            <td>{{ record.product_series }}</td>
+            <td>{{ record.reaction }}</td>
+            <td>{{ record.contraindication }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+{% else %}
+  <div class="container mt-3">
+      <h4 class="font-weight-bold mb-3 mt-2 text-center">Iнформація не знайдена!</h4>
+      <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
+  </div>
+{% endif %}
+
 {% endblock %}
 
 </body>

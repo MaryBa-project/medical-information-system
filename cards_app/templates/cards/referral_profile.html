@@ -1,8 +1,79 @@
 {% extends "base_ok.html" %}
 {% load static %}
+{% block css %}
+<link href="{% static 'cards/custom_card.css' %}" rel="stylesheet">
+{% endblock css %}
 
 {% block dynamic_content %}
- <h1>Направлення пацієнта</h1>  
+<div class="container py-4">
+    <h2 class="font-weight-bold text-center">Мої направлення</h2>
+
+  {% if not card.doctor %}
+    {% include 'not_family_doc.html' %}
+  {% endif %}
+
+  {% if card_referral %}
+    {% for ref in card_referral %}
+      <div class="card mb-4 shadow border-0 rounded-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <h4 class="fw-semibold mb-0 text-dark">
+              {% if ref.type_analys %}
+                {{ ref.type_analys.name }}
+              {% else %}
+                <span class="text-muted fst-italic">Аналіз не вказано</span>
+              {% endif %}
+            </h4>
+            <small class="text-muted fst-italic">
+              Створено: {{ ref.creation_date|date:"d.m.Y H:i" }}
+            </small>
+          </div>
+
+          <p class="card-text fs-5 mb-2">
+            <strong class="text-secondary">Статус:</strong>
+            {% with ref.resultanalysis as result %}
+              {% if result %}
+                <span class="badge bg-success text-white px-4 py-2 fs-6">Виконано</span>
+                <small class="text-success ms-2">({{ result.providing_date|date:"d.m.Y" }})</small>
+              {% elif ref.status == 'C' %}
+                <span class="badge bg-secondary text-white px-4 py-2 fs-6">Анульовано</span>
+              {% else %}
+                <span class="badge bg-warning text-white px-4 py-2 fs-6">Активне</span>
+              {% endif %}
+            {% endwith %}
+          </p>
+          <p class="card-text fs-5 mb-0">
+            <strong class="text-secondary">Виписав:</strong>
+            {% if ref.doctor %}
+              {{ ref.doctor.user.last_name }} {{ ref.doctor.user.first_name }}
+              {% if ref.doctor.user.patronymic %}
+                {{ ref.doctor.user.patronymic }}
+              {% endif %}
+              <small class="text-muted fst-italic">
+                ({{ ref.doctor.specialization }})
+              </small>
+            {% else %}
+              <span class="text-danger">Лікар не вказаний</span>
+            {% endif %}
+          </p>
+           <div class="text-end mt-3">
+            <a href="#" 
+               class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold">
+              <i class="bi bi-eye"></i> Переглянути направлення
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="text-center mt-5">
+      <h4 class="fw-bold mb-3 text-danger">Інформація не знайдена!</h4>
+      <p class="fs-5 text-muted">
+        Дані в карту ще не занесені або медичних втручань, пов’язаних із цим розділом, ще не було.
+      </p>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}
 
 </body>

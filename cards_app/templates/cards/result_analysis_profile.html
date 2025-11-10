@@ -2,8 +2,51 @@
 {% load static %}
 
 {% block dynamic_content %}
- <h1>Результати аналізу пацієнта</h1>  
-{% endblock %}
 
-</body>
-</html>
+<div class="container py-5">
+  <h2 class="font-weight-bold text-center">Результати аналізів</h2>
+
+  {% if not card.doctor %}
+    {% include 'not_family_doc.html' %}
+  {% endif %}
+
+  {% if card_analysis %}
+{% for result in card_analysis %}
+  <div class="card mb-4 shadow border-0 rounded-4">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <h4 class="fw-semibold mb-0 text-dark">
+          {% if result.referral and result.referral.type_analys %}
+            {{ result.referral.type_analys.name }}
+          {% else %}
+            <span class="text-muted fst-italic">Тип аналізу не вказано</span>
+          {% endif %}
+        </h4>
+        <small class="text-muted fst-italic">
+          Отримано: {{ result.providing_date|date:"d.m.Y H:i" }}
+        </small>
+      </div>
+      
+      {% if result.report %}
+        <p class="mt-3">
+          <strong class="text-secondary">Коментар лікаря:</strong> {{ result.report|truncatechars:200 }}
+        </p>
+      {% endif %}
+
+      <div class="text-end mt-3">
+        <a href="#" class="btn btn-outline-primary rounded-pill px-4">
+          <i class="bi bi-eye"></i> Переглянути повністю
+        </a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+{% else %}
+  <div class="container mt-3">
+      <h4 class="font-weight-bold mb-3 mt-2 text-center">Iнформація не знайдена!</h4>
+      <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
+  </div>
+{% endif %}
+
+{% endblock %}

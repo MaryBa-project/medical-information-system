@@ -43,19 +43,19 @@ class ProfileForm(UserChangeForm):
 class DoctorForm(forms.ModelForm):
   class Meta:
     model = Doctor
-    fields = ("tab_nomer", "specialization", "stazh", "Umovy_pryyomu")
+    fields = ("specialization", "stazh", "Umovy_pryyomu")
 
 
 class LabAssistantForm(forms.ModelForm):
   class Meta:
     model = LaboratoryAssistent
-    fields = ("tab_nomer", "specialization", "stazh")
+    fields = ("specialization", "stazh")
 
 
 class PersonnelForm(forms.ModelForm):
   class Meta:
     model = Personnel
-    fields = ("tab_nomer", "stazh", "department", "position")
+    fields = ("stazh", "department", "position")
 
 
 class PatientForm(forms.ModelForm):

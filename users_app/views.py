@@ -98,7 +98,7 @@ def profile(request):
             personnel_form.save()
           if assistant_form:
             assistant_form.save()  
-            return HttpResponseRedirect(reverse('user:profile'))
+          return HttpResponseRedirect(reverse('user:profile'))
           
     else:
       if 'ПАЦІЄНТИ' in user_groups:

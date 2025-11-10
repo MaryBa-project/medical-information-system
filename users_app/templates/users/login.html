@@ -29,13 +29,13 @@
                     <input type="text" class="form-control"
                     name="username" id="id_username"
                     value="{% if form.username.value %}{{form.username.value}}{% endif %}"
-                    placeholder="Введіть нік">
+                    placeholder="Введіть нік" required>
                 </div>
                 <div class="mb-3">
                     <label for="id_password" class="form-label">Пароль</label>
                     <input type="password" class="form-control" 
                     name="password" id="id_password"
-                    placeholder="Введіть пароль">
+                    placeholder="Введіть пароль" required>
                 </div>
 
 

@@ -14,7 +14,7 @@
                 <img src="{{ user.img.url }}"
                     alt="Фото профіля" class="img-fluid rounded">
             {% else %}
-                <img src="{% static 'cards_app/img/images.png' %}"
+                <img src="{% static 'users/img/profile_img.png' %}"
                     alt="Фото профіля" class="img-fluid rounded">
             {% endif %}
             <input type="file" class="form-control mt-3" id="id_img"
@@ -31,15 +31,13 @@
             <div class="row">
               <div class="col-md-12 mb-2">
                 
-                {% if not "ПАЦІЄНТИ" %}
                   {% if "ЛІКАРІ" in user_groups %}
-                      <h6>Табельний номер працівника:{{ user.doctor.tab_nomer|default:"(Профіль не знайдено)" }}</h6>
+                      <h6>Табельний номер працівника:{{ user.doctor.tab_nomer|default:"(працівника не знайдено)" }}</h6>
                   {% elif "МЕД.ПЕРСОНАЛ" in user_groups %}
-                      <h6>Табельний номер працівника:{{ user.personnel.tab_nomer|default:"(Профіль не знайдено)" }}</h6>
+                      <h6>Табельний номер працівника:{{ user.personnel.tab_nomer|default:"(працівника не знайдено)" }}</h6>
                   {% elif "ЛАБОРАНТИ" in user_groups %}
-                      <h6>Табельний номер працівника:{{ user.laboratoryassistent.tab_nomer|default:"(Профіль не знайдено)" }}</h6> 
+                      <h6>Табельний номер працівника:{{ user.laboratoryassistent.tab_nomer|default:"(працівника не знайдено)" }}</h6> 
                   {% endif %}
-                {% endif %}
               </div>
 
               <div class="col-md-12 mb-3">

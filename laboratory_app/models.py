@@ -22,6 +22,8 @@ class MedReferral(models.Model):
     verbose_name_plural = 'Направлення'
   def __str__(self):
     return f'{self.id}'
+  def display_id(self):
+    return f'{self.id:03}'
 
 
 class TypeAnalysis(models.Model):
@@ -57,7 +59,7 @@ class TemplateParameter(models.Model):
 
 class ResultParameter(models.Model):
   value = models.DecimalField(max_digits=6,decimal_places=3, verbose_name='Результат')
-  unit_of_measurement = models.CharField(max_length=20, verbose_name='Одиниці вимірювання')
+  unit_of_measurement = models.CharField(max_length=20, blank=True, null=True, verbose_name='Одиниці вимірювання')
   coment = models.CharField(max_length=100, verbose_name='Коментар')
   template = models.ForeignKey('TemplateParameter', on_delete=models.CASCADE, verbose_name='ID шаблону аналізу')
   result_analys = models.ForeignKey('ResultAnalysis', on_delete=models.CASCADE, verbose_name='ID результатів аналізів')
@@ -71,9 +73,8 @@ class ResultParameter(models.Model):
 
 class ResultAnalysis(models.Model):
   medcard = models.ForeignKey('cards_app.MedCards', on_delete=models.CASCADE, verbose_name='Номер медичної карти')
-  referral = models.OneToOneField('MedReferral', on_delete=models.SET_NULL, blank=True, null=True,
-                                         verbose_name='ID направлення')
-  lab_assistent = models.ForeignKey('users_app.LaboratoryAssistent', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='ІD лаборанта')
+  referral = models.OneToOneField('MedReferral', on_delete=models.PROTECT, verbose_name='ID направлення')
+  lab_assistent = models.ForeignKey('users_app.LaboratoryAssistent', on_delete=models.PROTECT, verbose_name='ІD лаборанта')
   providing_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата заповнення виcновку')
   report = models.TextField(max_length=500, verbose_name='Висновок')
   class Meta:
@@ -82,3 +83,5 @@ class ResultAnalysis(models.Model):
     verbose_name_plural = 'Результати аналізів'
   def __str__(self):
     return f'{self.id}'
+  def display_id(self):
+    return f'{self.id:03}'

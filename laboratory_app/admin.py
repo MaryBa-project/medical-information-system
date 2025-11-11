@@ -4,70 +4,44 @@ from .models import ResultAnalysis, TemplateParameter, TypeAnalysis, MedReferral
 
 
 
-# --- 1. Inline для дочірньої моделі (Параметри) ---
 class ResultParameterInline(admin.TabularInline):
     """
     Дозволяє редагувати ResultParameter безпосередньо 
     на сторінці ResultAnalysis.
     """
     model = ResultParameter
-    # Поля, які будуть відображатися та редагуватися в інлайні
     fields = ('template', 'value', 'unit_of_measurement', 'coment')
-    # Додаємо автозаповнення полів з шаблону
-    readonly_fields = ('unit_of_measurement',) # Це поле краще заповнювати автоматично
-    extra = 1 # Кількість порожніх форм для додавання нових параметрів
+    readonly_fields = () 
+    extra = 1
 
-
-
-
-
-# --- 2. Admin для батьківської моделі (Загальний Висновок) ---
+    # --- 2. Admin для батьківської моделі (Загальний Висновок) ---
 @admin.register(ResultAnalysis)
 class ResultAnalysisAdmin(admin.ModelAdmin):
-    """
-    Основна сторінка редагування, яка включає інлайни параметрів.
-    """
-    
-    list_display = (
-        'id', 
-        'medcard_display', 
-        'referral', 
-        'lab_assistent', 
-        'providing_date', 
-        'report'
-    )
-    
-    list_filter = ('providing_date', 'lab_assistent')
-    search_fields = (
-        'medcard__id', 
-        'referral__id', 
-        'lab_assistent__tab_nomer', 
-        'report'
-    )
-    
-    # Визначаємо, які поля відображаються у формі ResultAnalysis
-    fields = (
-        'medcard', 
-        'referral', 
-        'lab_assistent', 
-        'report'
-    )
-    
-    # ДОДАЄМО INLINE! Це магічна лінія, яка приєднує таблицю ResultParameter
     inlines = [ResultParameterInline]
-    
-    # Допоміжні методи для відображення
-    def medcard_display(self, obj):
-        # Припускаємо, що MedCards має метод display_id
-        return obj.medcard.display_id()
-    medcard_display.short_description = 'Мед. Картка ID'
-
-    def report_summary(self, obj):
-        # Показуємо лише перші 50 символів висновку
-        return obj.report[:50] + '...' if obj.report and len(obj.report) > 50 else obj.report
-    report_summary.short_description = 'Висновок'
-
-
+    def save_formset(self, request, form, formset, change):
+        """
+        Перезаписуємо для автоматичного заповнення одиниці вимірювання
+        на основі вибраного шаблону.
+        """
+        if formset.model == ResultParameter:
+            instances = formset.save(commit=False)
+            
+            # Збереження всіх змінених/нових інстансів inline
+            for instance in instances:
+                # 1. Перевіряємо, чи був вибраний шаблон
+                if instance.template:
+                    try:
+                        unit = instance.template.unit_of_measurement
+                        instance.unit_of_measurement = unit
+                        
+                    except AttributeError:
+                        instance.unit_of_measurement = 'ПОМИЛКА'
+                instance.save()
+            formset.save_m2m()
+            for obj in formset.deleted_objects:
+                obj.delete()
+        else:
+            super().save_formset(request, form, formset, change)
 
 admin.site.register(TemplateParameter)
 admin.site.register(TypeAnalysis)

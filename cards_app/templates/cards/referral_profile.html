@@ -17,7 +17,7 @@
       <div class="card mb-4 shadow border-0 rounded-4">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-start mb-3">
-            <h4 class="fw-semibold mb-0 text-dark">
+            <h4 class="font-weight-bold mb-0 text-dark">
               {% if ref.type_analys %}
                 {{ ref.type_analys.name }}
               {% else %}
@@ -56,25 +56,64 @@
               <span class="text-danger">Лікар не вказаний</span>
             {% endif %}
           </p>
-           <div class="text-end mt-3">
-            <a href="#" 
-               class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold">
+          <div class="text-end mt-3">
+            <button type="button"
+                    class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold"
+                    data-bs-toggle="modal"
+                    data-bs-target="#referralModal{{ ref.id }}">
               <i class="bi bi-eye"></i> Переглянути направлення
-            </a>
+            </button>
           </div>
         </div>
       </div>
-    {% endfor %}
-  {% else %}
-    <div class="text-center mt-5">
-      <h4 class="fw-bold mb-3 text-danger">Інформація не знайдена!</h4>
-      <p class="fs-5 text-muted">
-        Дані в карту ще не занесені або медичних втручань, пов’язаних із цим розділом, ще не було.
-      </p>
+      <div class="modal fade" id="referralModal{{ ref.id }}" tabindex="-1" aria-labelledby="referralModalLabel{{ ref.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="referralModalLabel{{ ref.display_id }}">Направлення №{{ ref.display_id }}</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрити"></button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong class="font-weight-bold">Тип аналізу:</strong> {{ ref.type_analys.name }}</p>
+        {% if ref.type_analys.description %}
+          <p><strong class="font-weight-bold">Опис аналізу:</strong> {{ ref.type_analys.description }}</p>
+        {% endif %}
+        
+        <p><strong class="font-weight-bold">Дата створення:</strong> {{ ref.creation_date|date:"d.m.Y H:i" }}</p>
+        <p><strong class="font-weight-bold">Лікар:</strong> {{ ref.doctor.user.last_name }} {{ ref.doctor.user.first_name }}</p>
+        <p><strong class="font-weight-bold">Статус:</strong>
+          {% if ref.status == 'C' %}
+            <span class="badge bg-secondary text-white px-4 py-2 fs-6">Анульовано</span>
+          {% elif ref.resultanalysis %}
+            <span class="badge bg-success text-white px-4 py-2 fs-6">Виконано</span>
+          {% else %}
+            <span class="badge bg-warning text-white px-4 py-2 fs-6">Активне</span>
+          {% endif %}
+        </p>
+
+        {% if ref.comment %}
+          <p><strong>Коментар:</strong> {{ ref.comment }}</p>
+        {% endif %}
+          <div class="text-center mt-3">
+            <button type="button" class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold">Переглянути направлення</button>
+          </div>
+      </div>
     </div>
-  {% endif %}
+  </div>
+</div>
+
+    {% endfor %}
+
+
+
+
+
+{% else %}
+  <div class="container mt-3">
+      <h4 class="font-weight-bold mb-3 mt-2 text-center">Iнформація не знайдена!</h4>
+      <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
+  </div>
+{% endif %}
 </div>
 {% endblock %}
-
-</body>
-</html>

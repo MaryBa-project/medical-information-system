@@ -15,5 +15,6 @@ urlpatterns = [
     path('vaccine/', views.vaccine_profile, name='vaccine_profile'), 
     path('referral/', views.referral_profile, name='referral_profile'), 
     path('result-analysis/', views.result_analysis_profile, name='result_analysis_profile'), 
+    path('result-card/<int:card_analysis_id>/', views.result_id_profile, name='result_id_profile'),
 
 ]

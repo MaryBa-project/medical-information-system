@@ -113,8 +113,6 @@ def referral_profile(request):
   return render(request, 'cards/referral_profile.html', context)
 
 
-
-
 @login_required
 def result_analysis_profile(request):
   user = request.user
@@ -131,3 +129,20 @@ def result_analysis_profile(request):
         'card_analysis': card_analysis,
     }
   return render(request, 'cards/result_analysis_profile.html', context)
+
+
+@login_required
+def result_id_profile(request, card_analysis_id):
+    user = request.user
+    patient = get_object_or_404(Patient, user=user)
+    card_analysis = get_object_or_404(ResultAnalysis, id=card_analysis_id, medcard__patient=patient)
+
+    card = card_analysis.medcard
+
+    context = {
+        'user': user,
+        'patient': patient,
+        'card': card,
+        'card_analysis': card_analysis,
+    }
+    return render(request, 'cards/result_analysis_view.html', context)

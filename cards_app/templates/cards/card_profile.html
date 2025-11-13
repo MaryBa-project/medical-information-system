@@ -3,175 +3,220 @@
 {% load custom_filters %}
 {% block dynamic_content %}
 
-{% if not card.doctor %}
-  {% include 'not_family_doc.html' %}
-{% endif %}
+{% if 'ПАЦІЄНТИ' in user_groups and not card.doctor %}
+    {% include 'not_family_doc.html' %}
+  {% endif %}
 
-{% if card %}
-<div class="container-fluid">
-  <div class="p-4 mb-4">
+  {% if card %}
+    <div class="container-fluid">
+      <div class="p-4 mb-4">
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-      <h4 class="fw-bold mb-2">
-        {{ card.patient.user.last_name }} {{ card.patient.user.first_name }}
-        {% if card.patient.user.patronymic %} {{ card.patient.user.patronymic }}{% endif %}
-      </h4>
-      <div class="text-muted small">
-        <div><i class="bi bi-card-text"></i> ID-карти: {{ card.display_id }}</div>
-        <i class="bi bi-calendar-check"></i> Дата реєстрації: {{ card.registration_date|date:"d E Y, H:i" }}
-        <br>
-        {% if card.deregistration_date %}
-          <i class="bi bi-calendar-x"></i> Дата виписки: {{ card.deregistration_date|date:"d E Y, H:i" }}
-        {% endif %}
-        
-      </div>
-    </div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+          <h4 class="fw-bold mb-2">
+            {{ card.patient.user.last_name }} {{ card.patient.user.first_name }}
+            {% if card.patient.user.patronymic %} {{ card.patient.user.patronymic }}{% endif %}
+          </h4>
+          <div class="text-muted small">
+            <div><i class="bi bi-card-text"></i> ID-карти: {{ card.display_id }}</div>
+            <i class="bi bi-calendar-check"></i> Дата реєстрації: {{ card.registration_date|date:"d E Y, H:i" }}
+            <br />
+            {% if card.deregistration_date %}
+              <i class="bi bi-calendar-x"></i> Дата виписки: {{ card.deregistration_date|date:"d E Y, H:i" }}
+            {% endif %}
 
-    <!-- Сигнальні позначки -->
-    <div class="card shadow mb-4 border-0 bg-light">
-      <div class="card-body">
-        <h5 class="fw-bold text-center mb-3">Сигнальні позначки</h5>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Група крові:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Група крові" %}
-                  {{ mark.value }}
-                {% endif %}
-              {% endfor %}
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Резус" %}
-                  {{ mark.value }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Цукровий діабет:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Цукровий діабет" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Інфекційні захворювання:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Інфекційні захворювання" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Алергії:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Алергії" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Хірургічні втручання:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Хірургічні втручання" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Переливання крові:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Переливання крові" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Бронхіальна астма:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Бронхіальна астма" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Епілепсія:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Епілепсія" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
-          </div>
-
-          <div class="col-md-6">
-            <p class="mb-1"><strong>Онкологічні захворювання:</strong>
-              {% for mark in individual_marks %}
-                {% if mark.signal_mark.name == "Онкологічні захворювання" %}
-                  {{ mark.value|custom_yesno }}
-                {% endif %}
-              {% endfor %}
-            </p>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Контакти сімейного лікаря -->
-{% if card.doctor %}
-<div class="card border-0 bg-light shadow">
-  <div class="card-body">
-    <h5 class="fw-bold text-center mb-3">Контактні дані сімейного лікаря</h5>
-    
-    <div class="d-flex align-items-center"> 
-      
-      <div class="col-4 col-md-3 text-center"> 
-        {% if card.doctor.user.img %}
-          <img src="{{ card.doctor.user.img.url }}" alt="Лікар" width="80" class="rounded-circle mb-2">
+        <!-- Сигнальні позначки -->
+        <div class="card shadow mb-4 border-0 bg-light">
+          <div class="card-body">
+            <h5 class="fw-bold text-center mb-3">Сигнальні позначки</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Група крові:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Група крові" %}
+                      {{ mark.value }}
+                    {% endif %}
+                  {% endfor %}
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Резус" %}
+                      {{ mark.value }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Цукровий діабет:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Цукровий діабет" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Інфекційні захворювання:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Інфекційні захворювання" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Алергії:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Алергії" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Хірургічні втручання:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Хірургічні втручання" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Переливання крові:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Переливання крові" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Бронхіальна астма:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Бронхіальна астма" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Епілепсія:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Епілепсія" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Онкологічні захворювання:</strong>
+                  {% for mark in individual_marks %}
+                    {% if mark.signal_mark.name == "Онкологічні захворювання" %}
+                      {{ mark.value|custom_yesno }}
+                    {% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+  {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+<div class="text-end mb-3">
+<a href="#" class="btn btn-primary">
+    Редагувати сигнальні позначки
+  </a>
+</div>
+
+  {% endif %}
+          </div>
+        </div>
+
+                <!-- Контакти пацієнта для лікарів -->
+        {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+          <div class="card border-0 bg-light shadow">
+            <div class="card-body">
+              <h5 class="fw-bold text-center mb-3">Контактні дані пацієнта</h5>
+
+              <div class="d-flex align-items-center">
+                <div class="col-4 col-md-3 text-center">
+                  {% if card.patient.user.img %}
+                    <img src="{{ card.patient.user.img.url }}" alt="Пацієнт" width="80" class="rounded-circle mb-2" />
+                  {% else %}
+                    <img src="{% static 'users/img/profile_img.png' %}" alt="Пацієнт" width="80" class="rounded-circle mb-2" />
+                  {% endif %}
+                </div>
+
+                <div class="col-8 col-md-9 text-start">
+                  <div class="row">
+                    <div class="col-12 col-lg-6 mb-1">
+                      <i class="bi bi-telephone me-1"></i> {{ card.patient.user.phone_number }}
+                    </div>
+                    <div class="col-12 col-lg-6 mb-1">
+                      <i class="bi bi-envelope me-1"></i> {{ card.patient.user.email }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Контакти сімейного лікаря -->
+        {% if card.doctor %}
+         {% if "МЕД.ПЕРСОНАЛ" in user_groups or "ПАЦІЄНТИ" in user_groups or not can_edit %}
+          <div class="card border-0 bg-light shadow">
+            <div class="card-body">
+              <h5 class="fw-bold text-center mb-3">Контактні дані сімейного лікаря</h5>
+
+              <div class="d-flex align-items-center">
+
+                <div class="col-4 col-md-3 text-center">
+                  {% if card.doctor.user.img %}
+                    <img src="{{ card.doctor.user.img.url }}" alt="Лікар" width="80" class="rounded-circle mb-2" />
+                  {% else %}
+                    <img src="{% static 'cards/doctor.png' %}" alt="Лікар" width="80" class="rounded-circle mb-2" />
+                  {% endif %}
+                </div>
+
+                <div class="col-8 col-md-9 text-start">
+                  <div class="fw-bold mb-2">
+                    {{ card.doctor.user.last_name }} {{ card.doctor.user.first_name }}
+                    {% if card.doctor.user.patronymic %}
+                      {{ card.doctor.user.patronymic }}
+                    {% endif %}
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-lg-6 mb-1">
+                      <i class="bi bi-telephone me-1"></i> {{ card.doctor.user.phone_number }}
+                    </div>
+                    <div class="col-12 col-lg-6 mb-1">
+                      <i class="bi bi-envelope me-1"></i> {{ card.doctor.user.email }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
         {% else %}
-          <img src="{% static 'cards/doctor.png' %}" alt="Лікар" width="80" class="rounded-circle mb-2">
+          {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+            <div class="container mt-4 text-center text-danger">
+              <h4 class="fw-bold mb-2">Cімейного лікаря не назначено!</h4>
+            </div>
+          {% endif %}
         {% endif %}
       </div>
-
-      <div class="col-8 col-md-9 text-start"> 
-        
-        <div class="fw-bold mb-2"> 
-          {{ card.doctor.user.last_name }} {{ card.doctor.user.first_name }}
-          {% if card.doctor.user.patronymic %} {{ card.doctor.user.patronymic }}{% endif %}
-        </div>
-        
-        <div class="row">
-          <div class="col-12 col-lg-6 mb-1">
-            <i class="bi bi-telephone me-1"></i> {{ card.doctor.user.phone_number }}
-          </div>
-          <div class="col-12 col-lg-6 mb-1">
-            <i class="bi bi-envelope me-1"></i> {{ card.doctor.user.email }}
-          </div>
-        </div>
-      </div>
-    </div> 
     </div>
-</div>
-{% endif %}
+  {% else %}
+    <div class="container mt-4 text-center">
+      <h4 class="fw-bold mb-2">Інформація не знайдена!</h4>
+      <p>Дані ще не внесені або відсутні медичні записи.</p>
+    </div>
+  {% endif %}
 
-  </div>
-</div>
-
-{% else %}
-  <div class="container mt-4 text-center">
-    <h4 class="fw-bold mb-2">Інформація не знайдена!</h4>
-    <p>Дані ще не внесені або відсутні медичні записи.</p>
-  </div>
-{% endif %}
-
-{% endblock %}
+  {% endblock %}

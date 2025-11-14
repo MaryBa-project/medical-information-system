@@ -36,12 +36,12 @@
                 <p class="mb-1"><strong>Група крові:</strong>
                   {% for mark in individual_marks %}
                     {% if mark.signal_mark.name == "Група крові" %}
-                      {{ mark.value }}
+                      {{ mark.value|custom_yesno }}
                     {% endif %}
                   {% endfor %}
                   {% for mark in individual_marks %}
                     {% if mark.signal_mark.name == "Резус" %}
-                      {{ mark.value }}
+                      {{ mark.value|custom_yesno }}
                     {% endif %}
                   {% endfor %}
                 </p>
@@ -126,7 +126,7 @@
             </div>
   {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
 <div class="text-end mb-3">
-<a href="#" class="btn btn-primary">
+<a href="{% url "card:edit_mark" card.display_id%}" class="btn btn-primary">
     Редагувати сигнальні позначки
   </a>
 </div>

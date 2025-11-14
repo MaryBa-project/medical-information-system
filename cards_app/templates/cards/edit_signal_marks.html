@@ -1,0 +1,41 @@
+{% extends 'base_ok.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block dynamic_content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Редагування сигнальних позначок</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        
+        <div class="card shadow mb-4 border-0 bg-light">
+            <div class="card-body">
+                <div class="row g-3 mt-4">
+                    {% for form in formset %}
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.value.id_for_label }}" class="form-label">
+                                    <strong>{{ form.instance.signal_mark.name }}:</strong>
+                                </label>
+                                {{ form.value|add_class:"form-control form-control-sm" }}
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                                {% if form.value.errors %}
+                                    <div class="text-danger">{{ form.value.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                        <a href="{% url 'card:index' card_id=card.display_id %}" class="btn btn-outline-secondary">Повернутися</a>
+                        <button type="submit" class="btn btn-outline-success">Зберегти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

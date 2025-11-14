@@ -1,5 +1,5 @@
 from django.dispatch import receiver
-from cards_app.models import MedCards
+from cards_app.models import IndividualMarks, MedCards, SignalMarks
 from users_app.models import FamilyDoctor, Patient
 from django.db.models.signals import post_save
 
@@ -30,3 +30,14 @@ def sync_doctor_to_medcards(sender, instance, created, **kwargs):
     except MedCards.DoesNotExist:
         # Це не повинно траплятися, якщо перший сигнал спрацював.
         pass
+
+
+@receiver(post_save, sender=MedCards)
+def create_individual_marks(sender, instance, created, **kwargs):
+    """Автоматичне створення пустих індивідуальних позначок при створенні мед.карти"""
+    if created:
+        signal_marks = SignalMarks.objects.all()
+        IndividualMarks.objects.bulk_create([
+            IndividualMarks(medcard=instance, signal_mark=mark, value='')
+            for mark in signal_marks
+        ])

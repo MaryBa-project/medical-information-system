@@ -31,7 +31,7 @@ class SignalMarks(models.Model):
 class IndividualMarks(models.Model):
   medcard = models.ForeignKey('MedCards', on_delete=models.CASCADE, verbose_name='Номер медичної карти')
   signal_mark = models.ForeignKey('SignalMarks', on_delete=models.CASCADE, verbose_name='Cигнальна позначка')
-  value = models.CharField(max_length=100, verbose_name='Значення')
+  value = models.CharField(max_length=100, blank=True, null=True, verbose_name='Значення')
   class Meta:
     db_table = 'IndividualMarks'
     verbose_name = 'Індивідуальну позначку'

@@ -1,10 +1,12 @@
+from pyexpat.errors import messages
 from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
+from cards_app.forms import IndividualMarksFormSet
 from cards_app.models import CardVaccine, IndividualMarks, MedCards, SignalMarks
 from laboratory_app.models import MedReferral, ResultAnalysis
-from users_app.models import Doctor, Patient, Personnel
+from users_app.models import Doctor, Patient
 
 
 
@@ -41,7 +43,51 @@ def not_card(request):
 
 @login_required
 def index(request, card_id):
-  return render(request, 'cards/index_card.html')
+    user_groups = request.user.groups.values_list('name', flat=True)
+    if "ЛАБОРАНТИ" in user_groups:
+        raise Http404("Сторінка не знайдена")
+    card = get_object_or_404(MedCards.objects.select_related('patient', 
+                                            'patient__user', 'doctor', 'doctor__user').prefetch_related('individualmarks_set'),  id=card_id)
+    individual_marks = IndividualMarks.objects.filter(medcard=card)
+    current_user = request.user
+    doctor = card.doctor.user if card.doctor else None
+    can_edit = doctor == current_user
+    context = {
+        'card': card,
+        'can_edit': can_edit,
+        'individual_marks': individual_marks,
+    }
+    
+    return render(request, 'cards/card_profile.html', context)
+
+@login_required
+def edit_mark(request, card_id):
+    user_groups = request.user.groups.values_list('name', flat=True)
+    if not any(group in ["ЛІКАРІ", "МЕД.ПЕРСОНАЛ"] for group in user_groups):
+        raise Http404("Сторінка не знайдена")
+    # 1. Отримуємо конкретну медкарту за id
+    card = get_object_or_404(
+        MedCards.objects.prefetch_related('individualmarks_set'),
+        id=card_id
+    )
+    # 2. Обробка POST-запиту (збереження форми)
+    if request.method == 'POST':
+        # Створюємо FormSet, прив'язуючи дані з POST та instance
+        formset = IndividualMarksFormSet(request.POST, instance=card)
+        if formset.is_valid():
+            formset.save()
+            return redirect('card:index', card_id=card.id) 
+    # Обробка GET-запиту (відображення форми)
+    else:
+        formset = IndividualMarksFormSet(instance=card)
+    context = {
+        'card': card,
+        'formset': formset,
+    }
+    return render(request, 'cards/edit_signal_marks.html', context)
+
+
+
 
 @login_required
 def vaccine(request, card_id):

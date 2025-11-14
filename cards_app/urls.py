@@ -9,6 +9,8 @@ urlpatterns = [
     path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
     path('med-referral/<int:card_id>/',views.med_referral, name='referral'),
     path('result-analysis/<int:card_id>/',views.result_analysis, name='result_analysis'),
+    path('edit-mark/<int:card_id>/',views.edit_mark, name='edit_mark'),
+
   
   ###### ПАЦІЄНТИ #######
     path('', views.card_profile, name='card_profile'), # med-card/card-profile/

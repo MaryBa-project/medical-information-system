@@ -3,14 +3,17 @@ from cards_app import views
 
 app_name = 'cards_app'
 urlpatterns = [
+
+  
   ###### ЛІКАРІ #######
     path('all_cards/',views.all_cards, name='all_cards'),
     path('<int:card_id>/',views.index, name='index'), # med-card/00005/
-    path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
+    path('edit-mark/<int:card_id>/',views.edit_mark, name='edit_mark'),
     path('med-referral/<int:card_id>/',views.med_referral, name='referral'),
     path('result-analysis/<int:card_id>/',views.result_analysis, name='result_analysis'),
-    path('edit-mark/<int:card_id>/',views.edit_mark, name='edit_mark'),
-
+    path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
+    path('add-vaccine/<int:card_id>/', views.add_vaccine, name='add_vaccine'),
+    path('edit-vaccine/<int:vaccine_id>/', views.edit_vaccine, name='edit_vaccine'),
   
   ###### ПАЦІЄНТИ #######
     path('', views.card_profile, name='card_profile'), # med-card/card-profile/

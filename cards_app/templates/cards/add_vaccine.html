@@ -1,0 +1,73 @@
+{% extends "base_ok.html" %}
+{% load static %}
+{% block dynamic_content %}
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method='POST'>
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="id_vaccination" class="form-label">Вакцина</label>
+                    <select class="form-select" name="vaccination" id="id_vaccination">
+                        <option value="">Не визначено</option>
+                        {% for vaccine in form.fields.vaccination.queryset %}
+                            <option value="{{ vaccine.id }}" {% if form.vaccination.value == vaccine.id %}selected{% endif %}>
+                                {{ vaccine.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Серія вакцини</label>
+                    <input type='text' name="product_series" placeholder="Введіть серійний номер" class="form-control"
+                     value="{% if form.product_series.value %}{{ form.product_series.value }}{% endif %}">
+                    {% if form.product_series.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{form.product_series.errors}}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Протипоказання</label>
+                    <textarea name='contraindication' placeholder="Введіть застереження при введені вакцини" class="form-control">{% if form.contraindication.value %}{{ form.contraindication.value }}{% endif %}</textarea>
+                    {% if form.contraindication.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ form.contraindication.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_reaction" class="form-label">Реакція на щеплення</label>
+                    <select class="form-select" aria-label="Default select example" id="id_reaction" name="reaction">
+                        <option value="" {% if not form.reaction.value %}selected{% endif %}>Не визначено</option>
+                        <option value="Місцева" {% if form.reaction.value == "Місцева" %}selected{% endif %}>Місцева</option>
+                        <option value="Загальна" {% if form.reaction.value == "Загальна" %}selected{% endif %}>Загальна</option>
+                    </select>
+                    {% if form.reaction.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{form.reaction.errors}}</div>
+                {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Дата</label>
+                    <input type='date' name = 'date_vaccine' placeholder="Введіть дату вакцинації" class="form-control"
+                    value="{% if form.date_vaccine.value %}{{ form.date_vaccine.value }}{% endif %}">
+                    {% if form.date_vaccine.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{form.date_vaccine.errors}}</div>
+                    {% endif %}
+                </div>
+                <a href="{% url 'card:vaccine' card_id=card.display_id %}" class="btn btn-outline-secondary mt-3">Повернутися</a>
+                <button type="submit" class="btn btn-outline-success mt-3">Зберегти запис</button>
+                            
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

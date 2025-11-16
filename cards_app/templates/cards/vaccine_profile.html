@@ -2,61 +2,82 @@
 {% load static %}
 
 {% block css %}
-  <style>
-    .table-responsive {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch; /* Додає інерційну прокрутку на iOS */
-    }
-  </style>
+<style>
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* інерційна прокрутка на iOS */
+}
+</style>
 {% endblock %}
-
 
 {% block dynamic_content %}
 
-{% if not card.doctor %}
-  {% include 'not_family_doc.html' %}
+{% if 'ПАЦІЄНТИ' in user_groups and not card.doctor %}
+    {% include 'not_family_doc.html' %}
 {% endif %}
 
 {% if card_vaccinations %}
+<div class="table-responsive">
+    {% if 'ПАЦІЄНТИ' in user_groups %}
+        <h2 class="font-weight-bold text-center py-4">Мої щеплення</h2>
+    {% else %}
+        <h3 class="font-weight-bold text-center py-4">
+            Щеплення: {{ card.patient.user.last_name }} {{ card.patient.user.first_name }} {{ card.patient.user.patronymic }}
+        </h3>
+    {% endif %}
 
-
-  <div class="table-responsive">
-    <h2 class="font-weight-bold text-center py-4">Мої щеплення</h2>
-    
-      <table class="table table-hover">
+    <table class="table table-hover">
         <thead>
-          <tr class='font-weight-bold'>
-            <th scope="col">#</th>
-            <th scope="col">Назва вакцини</th>
-            <th scope="col">Дата</th>
-            <th scope="col">Серія</th>
-            <th scope="col">Реакція</th>
-            <th scope="col">Протипоказання</th>
-          </tr>
+            <tr class='font-weight-bold'>
+                {% if can_edit %}<th scope="col">Дія</th>{% endif %}
+                <th scope="col">#</th>
+                <th scope="col">Назва вакцини</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Серія</th>
+                <th scope="col">Реакція</th>
+                <th scope="col">Протипоказання</th>
+            </tr>
         </thead>
         <tbody>
-          {% for record in card_vaccinations %}
-          <tr>
-            <th class='font-weight-bold'>{{ forloop.counter }}</th>
-            <td>{{ record.vaccination.name }}</td>
-            <td>{{ record.date_vaccine }}</td>
-            <td>{{ record.product_series }}</td>
-            <td>{{ record.reaction }}</td>
-            <td>{{ record.contraindication }}</td>
-          </tr>
-          {% endfor %}
+            {% for record in card_vaccinations %}
+            <tr>
+                {% if can_edit %}
+                <td>
+<a href="{% url 'card:edit_vaccine' vaccine_id=record.id %}" class="text-primary">
+    <i class="bi bi-pen"></i>
+</a>
+                </td>
+                {% endif %}
+                <th>{{ forloop.counter }}</th>
+                <td>{{ record.vaccination.name }}</td>
+                <td>{{ record.date_vaccine }}</td>
+                <td>{{ record.product_series }}</td>
+                <td>{{ record.reaction }}</td>
+                <td>{{ record.contraindication }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
-      </table>
-  </div>
+    </table>
+</div>
+
+{% if can_edit %}
+<div class="d-grid gap-2 d-md-block my-4">
+    <a href="{% url 'card:add_vaccine' card_id=card.display_id %}" class="btn btn-outline-success">Додати щеплення</a>
+</div>
+{% endif %}
 
 {% else %}
-  <div class="container mt-3">
-      <h4 class="font-weight-bold mb-3 mt-2 text-center">Iнформація не знайдена!</h4>
-      <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
-  </div>
+<div class="container my-4">
+    <h4 class="font-weight-bold mb-3 mt-2 text-center">Інформація не знайдена!</h4>
+    <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
+</div>
+{% if can_edit %}
+<div class="d-flex justify-content-between my-4">
+    <a href="{% url 'card:add_vaccine' card_id=card.display_id %}" class="btn btn-outline-success">
+        <i class="fas fa-plus"></i> Додати перший запис
+    </a>
+</div>
+{% endif %}
 {% endif %}
 
 {% endblock %}
-
-</body>
-</html>

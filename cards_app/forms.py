@@ -1,5 +1,7 @@
+from datetime import date, timedelta
+from django.core.validators import MinLengthValidator
 from django import forms
-from .models import IndividualMarks
+from .models import CardVaccine, IndividualMarks, Vaccination
 from django.forms import inlineformset_factory
 from .models import MedCards
 
@@ -7,9 +9,6 @@ class IndividualMarkForm(forms.ModelForm):
     class Meta:
         model = IndividualMarks
         fields = ['value']
-        # Якщо ви хочете відображати назву позначки (SignalMarks) як приховане поле, 
-        # ви можете додати 'signal_mark', але краще це робити через FormSet.
-
 
 IndividualMarksFormSet = inlineformset_factory(
     parent_model=MedCards, 
@@ -19,3 +18,36 @@ IndividualMarksFormSet = inlineformset_factory(
     extra=0,                 # Важливо: не дозволяємо додавати нові порожні позначки
     can_delete=False         # Не дозволяємо видаляти існуючі позначки
 )
+
+
+class CardVaccineForm(forms.ModelForm):
+    class Meta:
+        model = CardVaccine
+        fields = ['vaccination','product_series','reaction','contraindication','date_vaccine']
+
+
+    vaccination = forms.ModelChoiceField(
+    queryset=Vaccination.objects.all(),
+    widget=forms.Select(attrs={
+        'class': 'form-select',
+        'id': 'id_vaccination',
+    })
+)
+
+    contraindication = forms.CharField(widget=forms.Textarea())
+    product_series = forms.CharField(validators=[MinLengthValidator(5)])
+    date_vaccine = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}))
+    
+    def clean_date_vaccine(self):
+        value = self.cleaned_data.get("date_vaccine")
+        today = date.today()
+        two_weeks_ago = today - timedelta(days=14)
+        if value and value < two_weeks_ago:
+            raise forms.ValidationError(f'Дане поле не приймає дати, менші за {two_weeks_ago}')
+        elif value and value > date.today():
+            raise forms.ValidationError(f'Дане поле не приймає дати, більші за {date.today()}' )
+        return value
+
+
+

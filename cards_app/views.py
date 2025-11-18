@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -154,9 +154,57 @@ def edit_vaccine(request, vaccine_id):
 
 
 ### --Направлення-- ###
+
+
+@login_required
+def lab_journal(request):
+    user = request.user
+    user_groups = request.user.groups.values_list('name', flat=True)
+    
+    # 1. Перевірка на групу "ЛАБОРАНТИ"
+    if "ЛАБОРАНТИ" in user_groups:
+        card_referral = MedReferral.objects.exclude(status='C')
+        context = {
+            'user': user,
+            'card_referral': card_referral,
+            }
+        return render(request, 'laboratory/lab_journal.html', context)
+    elif "ЛІКАРІ" in user_groups:
+        doctor = get_object_or_404(Doctor, user=request.user)
+        card_referral = MedReferral.objects.filter(doctor=doctor) # <--- ВИКОРИСТОВУЄМО user (який є request.user)
+        context = {
+            'user': user,
+            'doctor':doctor,
+            'card_referral': card_referral,
+        }
+        return render(request, 'cards/referral_profile.html', context)
+    return HttpResponseForbidden("У вас немає доступу до цієї сторінки")
+
+
 @login_required
 def med_referral(request, card_id):
-  return render(request, 'cards/med_referral.html')
+    user = request.user
+    user_groups = request.user.groups.values_list('name', flat=True)
+    
+    # 1. Перевірка на групу "ЛІКАРІ" або "МЕД.ПЕРСОНАЛ"
+    if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups:
+        card = get_object_or_404(MedCards, id=card_id)
+        card_referral = MedReferral.objects.filter(medcard=card)
+        
+        context = {
+            'user': user,
+            'card_referral': card_referral,
+            'card': card,
+        }
+        return render(request, 'cards/referral_profile.html', context)
+        
+    # 2. Якщо користувач не належить до груп, які мають доступ
+    return HttpResponseForbidden("У вас немає доступу до цієї сторінки")
+
+
+
+
+
 
 
 

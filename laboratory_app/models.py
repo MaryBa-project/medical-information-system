@@ -40,8 +40,8 @@ class TypeAnalysis(models.Model):
 class TemplateParameter(models.Model):
   name = models.CharField(max_length=100, verbose_name='Назва параметру')
   unit_of_measurement = models.CharField(max_length=20, verbose_name='Одиниці вимірювання')
-  normal_min = models.DecimalField(max_digits=7,decimal_places=3, verbose_name='Мінімально допустиме значення')
-  normal_max = models.DecimalField(max_digits=7,decimal_places=3, verbose_name='Максимально допустиме значення')
+  normal_min = models.DecimalField(max_digits=7,decimal_places=3, blank=True, null=True, verbose_name='Мінімально допустиме значення')
+  normal_max = models.DecimalField(max_digits=7,decimal_places=3, blank=True, null=True, verbose_name='Максимально допустиме значення')
   type_analys = models.ForeignKey('TypeAnalysis', on_delete=models.CASCADE, verbose_name='ID типу аналізу')
   class Meta:
     db_table = 'TemplateParameter'

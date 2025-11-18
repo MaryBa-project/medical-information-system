@@ -9,11 +9,12 @@ urlpatterns = [
     path('all_cards/',views.all_cards, name='all_cards'),
     path('<int:card_id>/',views.index, name='index'), # med-card/00005/
     path('edit-mark/<int:card_id>/',views.edit_mark, name='edit_mark'),
-    path('med-referral/<int:card_id>/',views.med_referral, name='referral'),
     path('result-analysis/<int:card_id>/',views.result_analysis, name='result_analysis'),
     path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
     path('add-vaccine/<int:card_id>/', views.add_vaccine, name='add_vaccine'),
     path('edit-vaccine/<int:vaccine_id>/', views.edit_vaccine, name='edit_vaccine'),
+    path("med-referral_doctor/", views.lab_journal, name="referral_doc"),
+    path('med-referral/<int:card_id>/',views.med_referral, name='referral_card'),
   
   ###### ПАЦІЄНТИ #######
     path('', views.card_profile, name='card_profile'), # med-card/card-profile/

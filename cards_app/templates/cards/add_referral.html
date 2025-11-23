@@ -1,0 +1,75 @@
+{% extends "base_ok.html" %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'cards/custom_card.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block dynamic_content %}
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <h3 class="text-center mb-4 font-weight-bold">Додати направлення</h3>
+
+            <!-- Обгортка з тінню та сірим фоном -->
+            <div class="p-4 bg-light shadow rounded">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Тип аналізу -->
+
+
+
+                    <div class="mb-3">
+                    <label for="id_type_analys" class="form-label font-weight-bold">Тип аналізу</label>
+                    <select class="form-select" name="type_analys" id="id_type_analys">
+                        <option value="">Не визначено</option>
+                        {% for analys in form.fields.type_analys.queryset %}
+                            <option value="{{ analys.id }}" {% if form.type_analys.value == analys.id %}selected{% endif %}>
+                                {{ analys.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    <!-- Коментар -->
+    <div class="mb-3">
+                    <label class="form-label font-weight-bold">Коментар</label>
+                    <textarea name='coment' placeholder="Введіть коментар до направлення" class="form-control"></textarea>
+                    {% if form.coment.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ form.coment.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+
+
+
+                    <!-- Додаткова інформація (незмінна) -->
+                        <p><strong class="font-weight-bold ">Пацієнт:</strong> {{ card.patient.user.last_name }} {{ card.patient.user.first_name }}{% if card.patient.user.patronymic %} {{ card.patient.user.patronymic }}{% endif %}</p>
+                        <p><strong class="font-weight-bold ">Створює лікар:</strong> {{ user.last_name }} {{ user.first_name }}</p>
+                        <p><strong class="font-weight-bold ">Статус:</strong> Активне (за замовчуванням)</p>
+
+
+                    <!-- Кнопки -->
+                                             <a href="{% url 'card:referral_card' card_id=card.display_id %}"
+                           class="btn btn-outline-secondary mt-3">
+                           Повернутися
+                        </a>
+
+                        <button type="submit" class="btn btn-outline-success mt-3">
+                            Додати направлення
+                        </button>
+
+                </form>
+
+            </div> <!-- /.p-4.bg-light.shadow.rounded -->
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

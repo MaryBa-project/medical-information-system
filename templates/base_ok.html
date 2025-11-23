@@ -29,10 +29,19 @@
                   <a class="nav-link text-center" href="{% url 'user:profile' %}">Особистий кабінет</a>
                 </li>
                 <hr class='hr_cards'>
-                {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
-                  <li class="nav-item">
-                    <a class="nav-link text-center" href="{% url 'card:all_cards' %}">Медичні картки</a>
+                
+                
+                  {% if "ЛІКАРІ" in user_groups %}<li class="nav-item">
+                    <a class="nav-link text-center" href="{% url 'card:journal_referral' %}">Мої направлення</a>
                   </li>
+                  <hr class='hr_cards'>
+                  {% endif %}
+                  {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+                  <li class="nav-item">
+                    <a class="nav-link text-center fw-bold" href="{% url 'card:all_cards' %}">Медичні картки</a>
+                  </li>
+                  
+                  
                   {% if card %}
                     <hr class='hr_cards'>
                     <li class="nav-item">
@@ -44,7 +53,7 @@
                     </li>
                     <hr class='hr_cards'>
                     <li class="nav-item">
-                      <a class="nav-link text-center" href="{% url 'card:referral' card.display_id %}">Направлення</a>
+                      <a class="nav-link text-center" href="{% url 'card:referral_card' card.display_id %}">Направлення пацієнта</a>
                     </li>
                     <hr class='hr_cards'>
                     <li class="nav-item">
@@ -76,7 +85,7 @@
 
                 {% elif "ЛАБОРАНТИ" in user_groups %}
                   <li class="nav-item">
-                    <a class="nav-link text-center" href="{% url 'laboratory:lab_journal'%}">Лабораторний журнал</a>
+                    <a class="nav-link text-center" href="{% url 'card:journal_referral'%}">Лабораторний журнал</a>
                   </li>
                   <hr class='hr_cards'>
                   <li class="nav-item">

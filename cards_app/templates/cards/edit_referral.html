@@ -1,0 +1,107 @@
+{% extends "base_ok.html" %}
+{% load static %}
+{% block dynamic_content %}
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+
+            <!-- Інформація про направлення -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h4 class="font-weight-bold text-center mb-4">Інформація про направлення №{{referral.id}}</h4>
+
+                    <p><strong class="font-weight-bold">Тип аналізу:</strong> {{ referral.type_analys.name }}</p>
+
+                    {% if referral.type_analys.description %}
+                        <p><strong class="font-weight-bold">Опис аналізу:</strong> {{ referral.type_analys.description }}</p>
+                    {% endif %}
+
+                    <p><strong class="font-weight-bold">Дата створення:</strong>
+                        {{ referral.creation_date|date:"d.m.Y H:i" }}
+                    </p>
+
+
+                      <p><strong class="font-weight-bold">Пацієнт:</strong>
+                        {{ referral.medcard.patient.user.last_name }}
+                        {{ referral.medcard.patient.user.first_name }}
+                        {% if referral.medcard.patient.user.patronymic %}
+                            {{ referral.medcard.patient.user.patronymic }}
+                        {% endif %}
+                    </p>
+                    <p><strong class="font-weight-bold" >Лікар, що створив:</strong>
+                        {{ referral.doctor.user.last_name }}
+                        {{ referral.doctor.user.first_name }}
+                        {% if referral.doctor.user.patronymic %}
+                            {{ referral.doctor.user.patronymic }}
+                        {% endif %}
+                        <span class="text-muted fst-italic">
+                            ({{ referral.doctor.specialization }})
+                        </span>
+                    </p>
+
+
+
+            <!-- Форма редагування -->
+
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="referral_id" value="{{ referral.id }}">
+                        <div class="mb-3">
+                            <label class="font-weight-bold">Коментар:</label>
+                            <textarea
+                                name="coment"
+                                rows="4"
+                                class="form-control"
+                                placeholder="Введіть коментар"
+                            >{{ form.coment.value }}</textarea>
+
+                            {% if form.coment.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    {{ form.coment.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="font-weight-bold">Статус направлення:</label>
+                            <select name="status" class="form-control">
+                                <option value="N"
+                                    {% if form.status.value == "N" %}selected{% endif %}
+                                >Активне</option>
+
+                                <option value="C"
+                                    {% if form.status.value == "C" %}selected{% endif %}
+                                >Анульовано</option>
+                            </select>
+
+                            {% if form.status.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    {{ form.status.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <a href="{% url 'card:referral_card' card_id=card.display_id %}"
+                           class="btn btn-outline-secondary mt-3">
+                           Повернутися
+                        </a>
+
+                        <button type="submit" class="btn btn-outline-success mt-3">
+                            Зберегти зміни
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

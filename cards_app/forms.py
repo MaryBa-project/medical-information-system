@@ -1,6 +1,8 @@
 from datetime import date, timedelta
 from django.core.validators import MinLengthValidator
 from django import forms
+
+from laboratory_app.models import MedReferral, TypeAnalysis
 from .models import CardVaccine, IndividualMarks, Vaccination
 from django.forms import inlineformset_factory
 from .models import MedCards
@@ -50,4 +52,22 @@ class CardVaccineForm(forms.ModelForm):
         return value
 
 
+class MedReferralForm(forms.ModelForm):
+    
+    class Meta:
+        model = MedReferral
+        fields = [ 'coment', 'status']
 
+
+class ReferralAddForm(forms.ModelForm):
+    # Оголошуємо поле типу аналізу без класів Bootstrap
+    type_analys = forms.ModelChoiceField(
+        queryset=TypeAnalysis.objects.all(),
+        empty_label="Виберіть тип аналізу",
+        widget=forms.Select()
+    )
+
+    class Meta:
+        model = MedReferral
+        fields = ['type_analys', 'coment']  # status і creation_date не редагуються
+        # widgets більше не потрібні, бо поле вже вказане вище

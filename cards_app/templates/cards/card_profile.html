@@ -124,9 +124,9 @@
                 </p>
               </div>
             </div>
-  {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
+  {% if "ЛІКАРІ" in user_groups %}
 <div class="text-end mb-3">
-<a href="{% url "card:edit_mark" card.display_id%}" class="btn btn-primary">
+<a href="{% url "card:edit_mark" card.display_id%}" class="btn btn-outline-primary">
     Редагувати сигнальні позначки
   </a>
 </div>

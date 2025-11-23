@@ -22,7 +22,8 @@
         <h2 class="font-weight-bold text-center py-4">Мої щеплення</h2>
     {% else %}
         <h3 class="font-weight-bold text-center py-4">
-            Щеплення: {{ card.patient.user.last_name }} {{ card.patient.user.first_name }} {{ card.patient.user.patronymic }}
+            Щеплення: {{ card.patient.user.last_name }} {{ card.patient.user.first_name }}
+            {% if card.patient.user.patronymic %} {{ card.patient.user.patronymic }}{% endif %}
         </h3>
     {% endif %}
 

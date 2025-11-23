@@ -13,8 +13,10 @@ urlpatterns = [
     path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
     path('add-vaccine/<int:card_id>/', views.add_vaccine, name='add_vaccine'),
     path('edit-vaccine/<int:vaccine_id>/', views.edit_vaccine, name='edit_vaccine'),
-    path("med-referral_doctor/", views.lab_journal, name="referral_doc"),
+    path("med-referral_doctor/", views.lab_journal, name="journal_referral"),
     path('med-referral/<int:card_id>/',views.med_referral, name='referral_card'),
+    path('edit-referral/<int:referral_id>/',views.edit_referral, name='edit_referral'),
+    path('add-referral/<int:card_id>/',views.add_referral, name='add_referral'),
   
   ###### ПАЦІЄНТИ #######
     path('', views.card_profile, name='card_profile'), # med-card/card-profile/

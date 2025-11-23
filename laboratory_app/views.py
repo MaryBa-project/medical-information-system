@@ -8,3 +8,7 @@ def lab_journal(request):
 @login_required
 def lab_norms(request):
   return render(request, 'laboratory/lab_norms.html')
+
+@login_required
+def add_result(request):
+  return render(request, 'laboratory/add_result.html')

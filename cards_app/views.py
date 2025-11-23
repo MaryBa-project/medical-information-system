@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from cards_app.forms import CardVaccineForm, IndividualMarksFormSet
+from cards_app.forms import CardVaccineForm, IndividualMarksFormSet, MedReferralForm, ReferralAddForm
 from cards_app.models import CardVaccine, IndividualMarks, MedCards
 from laboratory_app.models import MedReferral, ResultAnalysis
 from users_app.models import Doctor, Patient
@@ -64,7 +64,7 @@ def index(request, card_id):
 @login_required
 def edit_mark(request, card_id):
     user_groups = request.user.groups.values_list('name', flat=True)
-    if not any(group in ["ЛІКАРІ", "МЕД.ПЕРСОНАЛ"] for group in user_groups):
+    if not "ЛІКАРІ" in user_groups:
         raise Http404("Сторінка не знайдена")
     # 1. Отримуємо конкретну медкарту за id
     card = get_object_or_404(
@@ -155,7 +155,7 @@ def edit_vaccine(request, vaccine_id):
 
 ### --Направлення-- ###
 
-
+# Перегляд без прив'язки до карти
 @login_required
 def lab_journal(request):
     user = request.user
@@ -177,10 +177,11 @@ def lab_journal(request):
             'doctor':doctor,
             'card_referral': card_referral,
         }
-        return render(request, 'cards/referral_profile.html', context)
+        return render(request, 'laboratory/lab_journal.html', context)
     return HttpResponseForbidden("У вас немає доступу до цієї сторінки")
 
 
+# Перегляд з прив'язкою до карти
 @login_required
 def med_referral(request, card_id):
     user = request.user
@@ -200,6 +201,60 @@ def med_referral(request, card_id):
         
     # 2. Якщо користувач не належить до груп, які мають доступ
     return HttpResponseForbidden("У вас немає доступу до цієї сторінки")
+
+
+@login_required
+def add_referral(request, card_id):
+    card = get_object_or_404(MedCards, id=card_id)
+    user = request.user
+
+    # Перевірка групи лікарів
+    if "ЛІКАРІ" not in user.groups.values_list('name', flat=True):
+        return HttpResponseForbidden("У вас немає доступу до цієї сторінки")
+
+    if request.method == 'POST':
+        form = ReferralAddForm(request.POST)
+        if form.is_valid():
+            referral = form.save(commit=False)
+            referral.medcard = card
+            referral.doctor = get_object_or_404(Doctor, user=user)
+            referral.status = 'N'  # Активне при створенні
+            referral.save()
+            return redirect('card:referral_card', card_id=card.display_id())
+    else:
+        form = ReferralAddForm()
+
+    return render(request, 'cards/add_referral.html', {'form': form, 'card': card})
+
+
+
+
+@login_required
+def edit_referral(request, referral_id):
+    referral = get_object_or_404(MedReferral, id=referral_id)
+    card = referral.medcard
+    if not (
+        referral.doctor.user == request.user or 
+        card.doctor.user == request.user
+    ):
+        return HttpResponseForbidden("У вас немає доступу до редагування цього направлення")
+
+    if request.method == 'POST':
+        form = MedReferralForm(request.POST, instance=referral)
+        if form.is_valid():
+            form.save()
+            return redirect('card:referral_card', card_id=card.display_id())
+    else:
+        form = MedReferralForm(instance=referral)
+
+    return render(request, 'cards/edit_referral.html', {
+        'form': form,
+        'referral': referral,
+        'card': card,
+    })
+
+
+
 
 
 

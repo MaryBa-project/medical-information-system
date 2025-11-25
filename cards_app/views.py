@@ -1,4 +1,5 @@
 from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -27,12 +28,19 @@ def all_cards(request):
     else:
         # Для персоналу чи інших користувачів — редагування заборонене
         card_active_redact = Patient.objects.none()
+    paginator = Paginator(patients_with_cards, 5)
+    page_number = request.GET.get("page")  # ← читаємо номер сторінки
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'user_groups': list(user_groups),
-        'patients_with_cards': patients_with_cards,
-        'user': request.user,
-        'doctor': doctor,
-        'card_active_redact': card_active_redact}
+    'user_groups': list(user_groups),
+    'patients_with_cards': page_obj,  # ← тут уже сторінка!
+    'page_obj': page_obj,
+    'paginator': paginator,
+    'user': request.user,
+    'doctor': doctor,
+    'card_active_redact': card_active_redact,
+}
     return render(request, 'cards/all_cards.html', context)
 
 
@@ -164,9 +172,14 @@ def lab_journal(request):
     # 1. Перевірка на групу "ЛАБОРАНТИ"
     if "ЛАБОРАНТИ" in user_groups:
         card_referral = MedReferral.objects.exclude(status='C')
+        paginator = Paginator(card_referral, 5)
+        page_number = request.GET.get("page")  # ← читаємо номер сторінки
+        page_obj = paginator.get_page(page_number)
         context = {
             'user': user,
-            'card_referral': card_referral,
+            'card_referral': page_obj,
+            'page_obj': page_obj,
+            'paginator': paginator,
             }
         return render(request, 'laboratory/lab_journal.html', context)
     elif "ЛІКАРІ" in user_groups:
@@ -227,8 +240,6 @@ def add_referral(request, card_id):
     return render(request, 'cards/add_referral.html', {'form': form, 'card': card})
 
 
-
-
 @login_required
 def edit_referral(request, referral_id):
     referral = get_object_or_404(MedReferral, id=referral_id)
@@ -252,14 +263,6 @@ def edit_referral(request, referral_id):
         'referral': referral,
         'card': card,
     })
-
-
-
-
-
-
-
-
 
 
 

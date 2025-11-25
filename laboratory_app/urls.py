@@ -7,6 +7,6 @@ urlpatterns = [
   ###### ЛАБОРАНТИ #######
   path('lab-journal/', views.lab_journal, name='lab_journal'),
   path('lab-norms/', views.lab_norms, name='lab_norms'),
-  path('add-res/', views.add_result, name='add_result'),
+  path('add-res/<int:referral_id>', views.add_result, name='add_result'),
 
 ]

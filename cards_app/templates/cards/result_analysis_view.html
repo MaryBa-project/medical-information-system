@@ -89,10 +89,39 @@
       </div>
     </div>
 
-    <div class="card-footer bg-white text-end">
+    {% comment %} <div class="card-footer bg-white text-end">
       <a href={% url "card:result_analysis_profile" %} class="btn btn-outline-secondary rounded-pill">
         <i class="bi bi-arrow-left"></i> Назад до списку</a>
-    </div>
+    </div> {% endcomment %}
+<div class="card-footer bg-white text-end">
+    {% comment %} {% if "ПАЦІЄНТИ" in user_groups %}
+        <a href="{% url 'card:result_analysis_profile' %}" 
+           class="btn btn-outline-secondary rounded-pill">
+            <i class="bi bi-arrow-left"></i> Назад до списку
+        </a>
+    {% elif "ЛАБОРАНТИ" in user_groups %}
+            <a href="{% url 'card:journal_referral' %}" 
+           class="btn btn-outline-secondary rounded-pill">
+            <i class="bi bi-arrow-left"></i> Назад до списку
+        </a>
+    {% else %}
+        <a href="{% url 'card:result_analysis' card.display_id %}" 
+           class="btn btn-outline-secondary rounded-pill">
+            <i class="bi bi-arrow-left"></i> Назад до списку
+        </a>
+    {% endif %} {% endcomment %}
+    <a href="javascript:history.back()" 
+   class="btn btn-outline-secondary rounded-pill">
+    <i class="bi bi-arrow-left"></i> Назад
+</a>
+</div>
+
+
+
+
+
+
+
   </div>
 </div>
 {% endblock %}

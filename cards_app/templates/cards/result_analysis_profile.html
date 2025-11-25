@@ -2,15 +2,16 @@
 {% load static %}
 
 {% block dynamic_content %}
+{% if 'ПАЦІЄНТИ' in user_groups and not card.doctor %}
+    {% include 'not_family_doc.html' %}
+{% endif %}
 
+  {% if card_analysis %}
 <div class="container py-4">
   <h2 class="font-weight-bold text-center">Результати аналізів</h2>
 
-  {% if not card.doctor %}
-    {% include 'not_family_doc.html' %}
-  {% endif %}
 
-  {% if card_analysis %}
+
 {% for result in card_analysis %}
   <div class="card mb-4 shadow border-0 rounded-4">
     <div class="card-body p-4">

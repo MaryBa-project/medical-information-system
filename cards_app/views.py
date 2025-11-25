@@ -266,8 +266,30 @@ def edit_referral(request, referral_id):
 ### --Аналізи-- ###
 @login_required
 def result_analysis(request, card_id):
-  return render(request, 'cards/result_analysis.html')
+    user = request.user
 
+    # Доступ мають тільки лікарі, медперсонал, лаборанти
+    if not user.groups.filter(name__in=["ЛІКАРІ", "МЕД.ПЕРСОНАЛ", "ЛАБОРАНТИ"]).exists():
+        return redirect('card:result_analysis_profile')  # Пацієнтів перекидає на їх сторінку
+
+    # Отримуємо вибрану карту
+    card = get_object_or_404(
+        MedCards.objects.select_related(
+            'patient', 'patient__user',
+            'doctor', 'doctor__user'
+        ),
+        id=card_id
+    )
+
+    # Отримуємо всі результати аналізів цієї карти
+    card_analysis = ResultAnalysis.objects.filter(medcard=card)
+
+    context = {
+        'user': user,
+        'card': card,
+        'card_analysis': card_analysis,
+    }
+    return render(request, 'cards/result_analysis.html', context)
 
 ################ Пацієнти ##############
 
@@ -344,17 +366,50 @@ def result_analysis_profile(request):
   return render(request, 'cards/result_analysis_profile.html', context)
 
 
+# @login_required
+# def result_id_profile(request, card_analysis_id):
+#     user = request.user
+#     patient = get_object_or_404(Patient, user=user)
+#     card_analysis = get_object_or_404(ResultAnalysis, id=card_analysis_id, medcard__patient=patient)
+
+#     card = card_analysis.medcard
+
+#     context = {
+#         'user': user,
+#         'patient': patient,
+#         'card': card,
+#         'card_analysis': card_analysis,
+#     }
+#     return render(request, 'cards/result_analysis_view.html', context)
+
+
 @login_required
 def result_id_profile(request, card_analysis_id):
     user = request.user
-    patient = get_object_or_404(Patient, user=user)
-    card_analysis = get_object_or_404(ResultAnalysis, id=card_analysis_id, medcard__patient=patient)
+    user_groups = request.user.groups.values_list('name', flat=True)
+
+    # ---------- ПАЦІЄНТ ----------
+    if "ПАЦІЄНТИ" in user_groups:
+        card_analysis = get_object_or_404(
+            ResultAnalysis,
+            id=card_analysis_id,
+            medcard__patient__user=user
+        )
+
+    # ---------- ЛІКАРІ | МЕД.ПЕРСОНАЛ | ЛАБОРАНТИ ----------
+    elif "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups or "ЛАБОРАНТИ" in user_groups:
+
+        # Тут персонал може бачити всі результати
+        card_analysis = get_object_or_404(ResultAnalysis, id=card_analysis_id)
+
+    # ---------- Невідома роль ----------
+    else:
+        return HttpResponseForbidden("У вас немає доступу до цього ресурсу.")
 
     card = card_analysis.medcard
 
     context = {
         'user': user,
-        'patient': patient,
         'card': card,
         'card_analysis': card_analysis,
     }

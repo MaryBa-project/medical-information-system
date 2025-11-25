@@ -4,14 +4,15 @@
 {% block dynamic_content %}
 
 
-<div class="container py-4">
+
+
+
+  {% if card_analysis %}
+  <div class="container py-4">
         <h3 class="font-weight-bold text-center">
             Результати аналізів: {{ card.patient.user.last_name }} {{ card.patient.user.first_name }}
             {% if card.patient.user.patronymic %} {{ card.patient.user.patronymic }}{% endif %}
         </h3>
-
-
-  {% if card_analysis %}
 {% for result in card_analysis %}
   <div class="card mb-4 shadow border-0 rounded-4">
     <div class="card-body p-4">
@@ -44,10 +45,14 @@
 {% endfor %}
 
 {% else %}
-  <div class="container mt-3">
-      <h4 class="font-weight-bold mb-3 mt-2 text-center">Iнформація не знайдена!</h4>
-      <p class="text-center">Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.</p>
-  </div>
+<div class="container mt-5">
+    <h4 class="font-weight-bold mb-3 mt-4 text-center">
+        Iнформація в медичній карті №{{card.display_id}} не знайдена!
+    </h4>
+    <p class="text-center">
+        Дані в карту ще не занесені або медичних втручань пов'язаних з цим розділом ще не було.
+    </p>
+</div>
 {% endif %}
 
 {% endblock %}

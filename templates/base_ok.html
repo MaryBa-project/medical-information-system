@@ -87,10 +87,10 @@
                   <li class="nav-item">
                     <a class="nav-link text-center" href="{% url 'card:journal_referral'%}">Лабораторний журнал</a>
                   </li>
-                  <hr class='hr_cards'>
+                  {% comment %} <hr class='hr_cards'>
                   <li class="nav-item">
                     <a class="nav-link text-center" href="{% url 'laboratory:lab_norms'%}">Реєстр нормативних значень</a>
-                  </li>
+                  </li> {% endcomment %}
                 {% endif %}
               </ul>
             </div>

@@ -7,7 +7,7 @@
     display: block;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch; /* інерційна прокрутка на iOS */
   }
   .table-responsive-custom table {
     min-width: 700px;
@@ -16,27 +16,23 @@
 {% endblock css %}
 
 {% block dynamic_content %}
-<div class="container mt-4">
+<div class="container mt-4 ">
+          <h2 class="font-weight-bold text-center">Внести результати аналізу</h2>
   <div class="card shadow-sm border-0 rounded-4">
-    <div class="card-header bg-primary text-white rounded-top-4">
-      <h4 class="mb-0">
-        <i class="bi bi-clipboard2-pulse me-2"></i>Внести результати аналізу
-      </h4>
-    </div>
 
-    <div class="card-body">
+    <div class="card-body shadow">
       <!-- Інформація про направлення -->
       <div class="row mb-4">
         <div class="col-md-4">
-          <p class="mb-1 font-weight-bold">Номер медичної картки:</p>
+          <p class="font-weight-bold">Номер медичної картки:</p>
           <p class="fs-5">{{ card.display_id }}</p>
         </div>
         <div class="col-md-4">
-          <p class="mb-1 font-weight-bold">ID направлення:</p>
+          <p class="font-weight-bold">ID направлення:</p>
           <p class="fs-5">{{ referral.display_id }}</p>
         </div>
         <div class="col-md-4">
-          <p class="mb-1 font-weight-bold">Тип аналізу:</p>
+          <p class="font-weight-bold">Тип аналізу:</p>
           <p class="fs-5">{{ ref_type.name }}</p>
         </div>
       </div>
@@ -80,20 +76,16 @@
         </div>
 
         <div class="text-end mt-4">
-          <button type="submit" class="btn btn-primary rounded-pill">
-            <i class="bi bi-check-circle me-1"></i> Зберегти результати
+          <a href="javascript:history.back()" class="btn btn-outline-secondary me-3">
+        <i class="bi bi-arrow-left"></i> Назад
+      </a>
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="bi bi-check-circle"></i> Зберегти результати
           </button>
         </div>
       </form>
 
     </div>
-
-    <div class="card-footer bg-white text-end">
-      <a href="javascript:history.back()" class="btn btn-outline-secondary rounded-pill">
-        <i class="bi bi-arrow-left"></i> Назад
-      </a>
-    </div>
-
   </div>
 </div>
 {% endblock %}

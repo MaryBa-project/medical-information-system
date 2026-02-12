@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # C:\Users\marib\Desktop\Магістратура\dev\SaveHealth_proj
@@ -23,6 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # Секретний ключ для підтримки цілісності передачі даних
 SECRET_KEY = 'django-insecure-dp)%m20ohb_d2q0hw!%xsl4!nl@6#0!6q+xqe2=w#fpz!4ratp'
+
+# Ключ для url
+load_dotenv()
+
+HASHIDS_SALT = os.getenv("HASHINDS_SALT")
 
 # Т- локальна розробка(при помилці на сторінці буде отладочна інфа), F - для звичайного користувача
 DEBUG = True
@@ -46,6 +53,7 @@ INSTALLED_APPS = [
     'cards_app',
     'laboratory_app',
     'messages_app',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {"min_length":14}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -141,4 +150,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users_app.CustomUser'
 
-LOGIN_URL = 'users_app/login/'
+LOGIN_URL = 'user:login'

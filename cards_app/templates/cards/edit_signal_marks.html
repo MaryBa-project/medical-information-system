@@ -1,6 +1,7 @@
 {% extends 'base_ok.html' %}
 {% load static %}
 {% load custom_filters %}
+{% load hash_filter %}
 
 {% block dynamic_content %}
 <div class="container mt-4">
@@ -30,7 +31,7 @@
                     {% endfor %}
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                        <a href="{% url 'card:index' card_id=card.display_id %}" class="btn btn-outline-secondary">Повернутися</a>
+                        <a href="{% url 'card:index' hid=card.id|encodeid %}" class="btn btn-outline-secondary">Повернутися</a>
                         <button type="submit" class="btn btn-outline-success">Зберегти</button>
                     </div>
                 </div>

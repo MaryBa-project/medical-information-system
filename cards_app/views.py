@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from cards_app.forms import CardVaccineForm, IndividualMarksFormSet, MedReferralForm, ReferralAddForm
 from cards_app.models import CardVaccine, IndividualMarks, MedCards
+from core.utils import decode_id, encode_id
 from laboratory_app.models import MedReferral, ResultAnalysis
 from users_app.models import Doctor, Patient
 
@@ -52,7 +53,11 @@ def not_card(request):
 
 ### --Головна сторінка карти та сигнальні позначки-- ###
 @login_required
-def index(request, card_id):
+def index(request, hid):
+    card_id = decode_id(hid)  # розшифровуємо в PK
+    if card_id is None:
+        raise Http404("Сторінка не знайдена")
+    
     user_groups = request.user.groups.values_list('name', flat=True)
     if "ЛАБОРАНТИ" in user_groups:
         raise Http404("Сторінка не знайдена")
@@ -70,20 +75,23 @@ def index(request, card_id):
 
 
 @login_required
-def edit_mark(request, card_id):
+def edit_mark(request, hid):
+    card_id = decode_id(hid)  # розшифровуємо в PK
+    if card_id is None:
+        raise Http404("Сторінка не знайдена")
     user_groups = request.user.groups.values_list('name', flat=True)
     if not "ЛІКАРІ" in user_groups:
         raise Http404("Сторінка не знайдена")
-    # 1. Отримуємо конкретну медкарту за id
+    # Отримуємо конкретну медкарту за id
     card = get_object_or_404(
         MedCards.objects.prefetch_related('individualmarks_set'), id=card_id)
-    # 2. Обробка POST-запиту (збереження форми)
+    # Обробка POST-запиту (збереження форми)
     if request.method == 'POST':
         # Створюємо FormSet, прив'язуючи дані з POST та instance
         formset = IndividualMarksFormSet(request.POST, instance=card)
         if formset.is_valid():
             formset.save()
-            return redirect('card:index', card_id=card.id) 
+            return redirect('card:index', hid=hid) 
     # Обробка GET-запиту (відображення форми)
     else:
         formset = IndividualMarksFormSet(instance=card)
@@ -96,7 +104,10 @@ def edit_mark(request, card_id):
 
 ### --Вакцинація-- ###
 @login_required
-def vaccine(request, card_id):
+def vaccine(request, hid):
+    card_id = decode_id(hid)  # розшифровуємо в PK
+    if card_id is None:
+        raise Http404("Сторінка не знайдена")
     user_groups = request.user.groups.values_list('name', flat=True)
     if "ЛАБОРАНТИ" in user_groups:
         raise Http404("Сторінка не знайдена")
@@ -117,7 +128,10 @@ def vaccine(request, card_id):
 
 
 @login_required
-def add_vaccine(request, card_id):
+def add_vaccine(request, hid):
+    card_id = decode_id(hid)  # розшифровуємо в PK
+    if card_id is None:
+        raise Http404("Сторінка не знайдена")
     card = get_object_or_404(MedCards, id=card_id)
     user = request.user
     user_groups = user.groups.values_list('name', flat=True)
@@ -132,7 +146,7 @@ def add_vaccine(request, card_id):
             card_vaccine = form.save(commit=False) # Створення екземпляру без збереження
             card_vaccine.medcard = card  # Присвоюємо медичну карту
             card_vaccine.save()
-            return HttpResponseRedirect(reverse('card:vaccine', args=[card.display_id()]))
+            return HttpResponseRedirect(reverse('card:vaccine', kwargs={'hid': hid}))
     else:
         form = CardVaccineForm()
     context = {
@@ -144,19 +158,26 @@ def add_vaccine(request, card_id):
 
 @login_required
 def edit_vaccine(request, vaccine_id):
+    # Беремо вакцинацію по id
     vaccine = get_object_or_404(CardVaccine, id=vaccine_id)
-    card = vaccine.medcard  # якщо треба для шаблону
+    card = vaccine.medcard  # медкарта для шаблону та редиректу
+    # Шифруємо id карти для URL
+    hid = encode_id(card.id)
 
     if request.method == 'POST':
         form = CardVaccineForm(request.POST, instance=vaccine)
         if form.is_valid():
             form.save()
-            return redirect('card:vaccine', card_id=card.display_id())
+            # Редирект на сторінку вакцинацій з hid
+            return redirect('card:vaccine', hid=hid)
     else:
         form = CardVaccineForm(instance=vaccine)
+
     context = {
         'form': form,
-        'card': card}
+        'card': card,
+        'hid': hid  # передаємо у шаблон для кнопки "Повернутися"
+    }
     return render(request, 'cards/edit_vaccine.html', context)
 
 
@@ -368,22 +389,6 @@ def result_analysis_profile(request):
     }
   return render(request, 'cards/result_analysis_profile.html', context)
 
-
-# @login_required
-# def result_id_profile(request, card_analysis_id):
-#     user = request.user
-#     patient = get_object_or_404(Patient, user=user)
-#     card_analysis = get_object_or_404(ResultAnalysis, id=card_analysis_id, medcard__patient=patient)
-
-#     card = card_analysis.medcard
-
-#     context = {
-#         'user': user,
-#         'patient': patient,
-#         'card': card,
-#         'card_analysis': card_analysis,
-#     }
-#     return render(request, 'cards/result_analysis_view.html', context)
 
 
 @login_required

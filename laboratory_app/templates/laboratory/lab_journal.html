@@ -119,11 +119,11 @@
 {% if 'ЛАБОРАНТИ' in user_groups %}
     {% if ref.resultanalysis %}
         <div class="text-center mt-3">
-            <a class="btn btn-outline-primary" href="{% url 'card:result_id_profile' ref.resultanalysis.id %}"> Переглянути результат</a>
+            <a class="btn btn-outline-primary" href="{% url 'card:result_id_profile' ref.resultanalysis.display_id %}"> Переглянути результат</a>
         </div> 
     {% else %}
         <div class="text-center mt-3">
-<a class="btn btn-outline-primary" href="{% url 'laboratory:add_result' ref.id %}">Внести результати</a>
+<a class="btn btn-outline-primary" href="{% url 'laboratory:add_result' ref.display_id %}">Внести результати</a>
         </div>
     {% endif %}
 {% endif %}

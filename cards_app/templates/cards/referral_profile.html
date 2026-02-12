@@ -125,22 +125,9 @@
         {% endif %} 
 
 <div class="text-center mt-3">
-    {% comment %} {% if ref.resultanalysis %}
-        <a class="btn btn-outline-primary" href="#">
-            <i class="bi bi-card-list"></i> Переглянути результат
-        </a>
-    {% endif %}
-{% if not ref.resultanalysis %}
-    {% if ref.doctor.user == user or ref.medcard.doctor.user == user%}
-        <a class="btn btn-outline-primary"  href="{% url 'card:edit_referral' referral_id=ref.id %}">
-            <i class="bi bi-pen"></i> Редагувати
-        </a>
-    {% endif %}
-    {% endif %} {% endcomment %}
-
 
      {% if ref.resultanalysis %}
-        <a class="btn btn-outline-primary" href="{% url 'card:result_id_profile' ref.resultanalysis.id %}"> 
+        <a class="btn btn-outline-primary" href="{% url 'card:result_id_profile' ref.resultanalysis.display_id %}"> 
             <i class="bi bi-card-list"></i> Переглянути результат
         </a>
 {% else %}

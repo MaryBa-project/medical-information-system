@@ -1,5 +1,7 @@
 {% extends "base_ok.html" %}
 {% load static %}
+{% load hash_filter %}
+
 {% block dynamic_content %}
 
 <div class="container mt-4 mb-4">
@@ -62,7 +64,7 @@
                             {{form.date_vaccine.errors}}</div>
                     {% endif %}
                 </div>
-                <a href="{% url 'card:vaccine' card_id=card.display_id %}" class="btn btn-outline-secondary mt-3">Повернутися</a>
+                <a href="{% url 'card:vaccine' hid=card.id|encodeid %}" class="btn btn-outline-secondary mt-3">Повернутися</a>
                 <button type="submit" class="btn btn-outline-success mt-3">Зберегти запис</button>
                             
             </form>

@@ -1,6 +1,7 @@
 {% extends "base_ok.html" %}
 {% load static %}
 {% load custom_filters %}
+{% load hash_filter %}
 {% block dynamic_content %}
 
 {% if 'ПАЦІЄНТИ' in user_groups and not card.doctor %}
@@ -126,7 +127,7 @@
             </div>
   {% if "ЛІКАРІ" in user_groups %}
 <div class="text-end mb-3">
-<a href="{% url "card:edit_mark" card.display_id%}" class="btn btn-outline-primary">
+<a href="{% url "card:edit_mark" hid=card.id|encodeid %}" class="btn btn-outline-primary">
     Редагувати сигнальні позначки
   </a>
 </div>

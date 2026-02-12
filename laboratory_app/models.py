@@ -6,11 +6,9 @@ STATUS_CHOICES = [
     ('C', 'Анульовано'),]
 
 class MedReferral(models.Model):
-  doctor = models.ForeignKey('users_app.Doctor', on_delete=models.SET_NULL, blank=True, null=True, 
-                             verbose_name='ID лікаря')
+  doctor = models.ForeignKey('users_app.Doctor', on_delete=models.PROTECT, verbose_name='ID лікаря')
   medcard = models.ForeignKey('cards_app.MedCards', on_delete=models.CASCADE, verbose_name='Номер медичної карти')
-  type_analys = models.ForeignKey('TypeAnalysis', on_delete=models.SET_NULL, blank=True, null=True,
-                                         verbose_name='ID типу аналізу')
+  type_analys = models.ForeignKey('TypeAnalysis', on_delete=models.PROTECT, verbose_name='ID типу аналізу')
   creation_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата створення направлення')
   coment = models.TextField(max_length=500, verbose_name='Коментар')
   status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N',

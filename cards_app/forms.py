@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from django.core.validators import MinLengthValidator
 from django import forms
+from django.utils import timezone
 
 from laboratory_app.models import MedReferral, TypeAnalysis
 from .models import CardVaccine, IndividualMarks, Vaccination
@@ -41,12 +42,31 @@ class CardVaccineForm(forms.ModelForm):
     date_vaccine = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}))
     
+        # ---- Перевірка дати створення (редагування) ----
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if self.instance.pk:
+            created_date = self.instance.date_vaccine     # це date
+            now = timezone.now().date()                  # теж date
+
+            days_passed = (now - created_date).days      # різниця в днях
+            hours_passed = days_passed * 24              # переводимо в години
+
+            if hours_passed > 48:
+                raise forms.ValidationError(
+                    "Редагування цього запису заборонено — минуло більше 48 годин від моменту створення."
+                )
+
+        return cleaned_data
+
+    
     def clean_date_vaccine(self):
         value = self.cleaned_data.get("date_vaccine")
         today = date.today()
-        two_weeks_ago = today - timedelta(days=14)
-        if value and value < two_weeks_ago:
-            raise forms.ValidationError(f'Дане поле не приймає дати, менші за {two_weeks_ago}')
+        week_ago = today - timedelta(days=7)
+        if value and value < week_ago:
+            raise forms.ValidationError(f'Дане поле не приймає дати, менші за {week_ago}')
         elif value and value > date.today():
             raise forms.ValidationError(f'Дане поле не приймає дати, більші за {date.today()}' )
         return value

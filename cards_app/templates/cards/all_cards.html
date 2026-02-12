@@ -1,5 +1,6 @@
 {% extends "base_ok.html" %}
 {% load static %}
+{% load hash_filter %}
 
 {% block dynamic_content %}
   {% if "ЛІКАРІ" in user_groups or "МЕД.ПЕРСОНАЛ" in user_groups %}
@@ -29,7 +30,7 @@
 
           <p class="card-text">Телефон пацієнта: {{ pat.user.phone_number }}</p>
           <div class="bt-group">
-            <a href={% url "cards_app:index" pat.medcards.display_id %} class="btn btn-outline-primary">Більше інформації</a>
+            <a href={% url "cards_app:index" hid=pat.medcards.id|encodeid %} class="btn btn-outline-primary">Більше інформації</a>
           </div>
         </div>
       </div>

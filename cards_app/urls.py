@@ -7,17 +7,18 @@ urlpatterns = [
   
   ###### ЛІКАРІ #######
     path('all_cards/',views.all_cards, name='all_cards'),
-    path('<int:card_id>/',views.index, name='index'), # med-card/00005/
-    path('edit-mark/<int:card_id>/',views.edit_mark, name='edit_mark'),
-    path('vaccine/<int:card_id>/',views.vaccine, name='vaccine'),
-    path('add-vaccine/<int:card_id>/', views.add_vaccine, name='add_vaccine'),
+    path('view/<str:hid>/', views.index, name='index'),
+    path('edit-mark/<str:hid>/',views.edit_mark, name='edit_mark'),
+    path('vaccine/<str:hid>/',views.vaccine, name='vaccine'),
+    path('add-vaccine/<str:hid>/', views.add_vaccine, name='add_vaccine'),
     path('edit-vaccine/<int:vaccine_id>/', views.edit_vaccine, name='edit_vaccine'),
     path("med-referral_staff/", views.lab_journal, name="journal_referral"),
     path('med-referral/<int:card_id>/',views.med_referral, name='referral_card'),
     path('edit-referral/<int:referral_id>/',views.edit_referral, name='edit_referral'),
     path('add-referral/<int:card_id>/',views.add_referral, name='add_referral'),
     path('result-analysis/<int:card_id>/',views.result_analysis, name='result_analysis'),
-  
+    
+
   ###### ПАЦІЄНТИ #######
     path('', views.card_profile, name='card_profile'), # med-card/card-profile/
     path('vaccine/', views.vaccine_profile, name='vaccine_profile'), 

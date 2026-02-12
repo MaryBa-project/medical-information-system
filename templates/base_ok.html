@@ -12,6 +12,7 @@
     {% block css %}
     {% endblock %}
   </head>
+  {% load hash_filter %}
   <body>
     {% include 'public/global_nav.html' %}
 
@@ -45,11 +46,11 @@
                   {% if card %}
                     <hr class='hr_cards'>
                     <li class="nav-item">
-                      <a class="nav-link text-center" href="{% url 'card:index' card.display_id %}">Загальна інформація</a>
+                      <a class="nav-link text-center" href="{% url 'card:index' hid=card.id|encodeid %}">Загальна інформація</a>
                     </li>
                     <hr class='hr_cards'>
                     <li class="nav-item">
-                      <a class="nav-link text-center" href="{% url 'card:vaccine' card.display_id %}">Щеплення</a>
+                      <a class="nav-link text-center" href="{% url 'card:vaccine' hid=card.id|encodeid %}">Щеплення</a>
                     </li>
                     <hr class='hr_cards'>
                     <li class="nav-item">
